@@ -11,7 +11,8 @@ public class Player {
 
 	int health;
 	int mana;
-	
+	Card[] CardsInHand = new Card[8];
+
 	public Player() {
 		super();
 		this.health = 20;
@@ -34,7 +35,9 @@ public class Player {
 	public void setMana(int mana) {
 		this.mana = mana;
 	}
-	
+	public void drawACard(){
+
+	}
 	
 	
 }
