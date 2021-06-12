@@ -38,12 +38,6 @@ public class Initalize implements EventProcessor{
 			}
 		}
 
-		//画单位
-		Unit unit = BasicObjectBuilders.loadUnit(StaticConfFiles.humanAvatar, 0, Unit.class);
-		gameState.unitList.add(unit);
-		unit.setPositionByTile(gameState.board[1][2]);
-		BasicCommands.drawUnit(out, unit, gameState.board[1][2]);
-
 		//属性初始化
 		gameState.humanPlayer = new Player(20, 0);
 		gameState.AIPlayer = new Player(20, 0);
@@ -51,6 +45,12 @@ public class Initalize implements EventProcessor{
 		BasicCommands.setPlayer2Health(out, gameState.AIPlayer);
 		gameState.humanPlayer.setMana(1);
 		BasicCommands.setPlayer1Mana(out, gameState.humanPlayer);
+
+		//画单位
+		Unit unit = BasicObjectBuilders.loadUnit(StaticConfFiles.humanAvatar, 0, Unit.class);
+		gameState.unitList.add(unit);
+		unit.setPositionByTile(gameState.board[1][2]);
+		BasicCommands.drawUnit(out, unit, gameState.board[1][2]);
 
 		Card hailstone_golem = BasicObjectBuilders.loadCard(StaticConfFiles.c_hailstone_golem, 0, Card.class);
 		BasicCommands.drawCard(out, hailstone_golem, 1, 0);
