@@ -31,24 +31,26 @@ public class Initalize implements EventProcessor{
 
 		//CommandDemo.executeDemo(out); // this executes the command demo, comment out this when implementing your solution
 		//画棋盘
-		Tile board[][] = new Tile[9][5];
 		for(int i=0;i<9;i++){
 			for(int j=0;j<5;j++){
-				board[i][j] = BasicObjectBuilders.loadTile(i, j);
-				BasicCommands.drawTile(out, board[i][j], 0);
+				gameState.board[i][j] = BasicObjectBuilders.loadTile(i, j);
+				BasicCommands.drawTile(out, gameState.board[i][j], 0);
 			}
 		}
+
 		//画单位
 		Unit unit = BasicObjectBuilders.loadUnit(StaticConfFiles.humanAvatar, 0, Unit.class);
-		unit.setPositionByTile(board[1][2]);
-		BasicCommands.drawUnit(out, unit, board[1][2]);
+		gameState.unitList.add(unit);
+		unit.setPositionByTile(gameState.board[1][2]);
+		BasicCommands.drawUnit(out, unit, gameState.board[1][2]);
+
 		//属性初始化
-		Player humanPlayer = new Player(20, 0);
-		Player AIPlayer = new Player(20, 0);
-		BasicCommands.setPlayer1Health(out, humanPlayer);
-		BasicCommands.setPlayer2Health(out, AIPlayer);
-		humanPlayer.setMana(1);
-		BasicCommands.setPlayer1Mana(out, humanPlayer);
+		gameState.humanPlayer = new Player(20, 0);
+		gameState.AIPlayer = new Player(20, 0);
+		BasicCommands.setPlayer1Health(out, gameState.humanPlayer);
+		BasicCommands.setPlayer2Health(out, gameState.AIPlayer);
+		gameState.humanPlayer.setMana(1);
+		BasicCommands.setPlayer1Mana(out, gameState.humanPlayer);
 
 		Card hailstone_golem = BasicObjectBuilders.loadCard(StaticConfFiles.c_hailstone_golem, 0, Card.class);
 		BasicCommands.drawCard(out, hailstone_golem, 1, 0);
