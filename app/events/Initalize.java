@@ -52,8 +52,12 @@ public class Initalize implements EventProcessor{
 		unit.setPositionByTile(gameState.board[1][2]);
 		BasicCommands.drawUnit(out, unit, gameState.board[1][2]);
 
-		Card hailstone_golem = BasicObjectBuilders.loadCard(StaticConfFiles.c_hailstone_golem, 0, Card.class);
-		BasicCommands.drawCard(out, hailstone_golem, 1, 0);
+		Card card = gameState.humanPlayer.drawACard();
+		BasicCommands.drawCard(out, card, 1, 0);
+		card = gameState.humanPlayer.drawACard();
+		BasicCommands.drawCard(out, card, 2, 0);
+		//Card hailstone_golem = BasicObjectBuilders.loadCard(StaticConfFiles.c_hailstone_golem, 0, Card.class);
+		//BasicCommands.drawCard(out, hailstone_golem, 1, 0);
 	}
 }
 
