@@ -18,20 +18,18 @@ public class Player {
 
 	int health;
 	int mana;
-	ArrayList<Card> cardsInHand = new ArrayList<Card>();
-	ArrayList<Card> deck = new ArrayList<Card>();
+	public ArrayList<Card> cardsInHand = new ArrayList<Card>();
+	public ArrayList<Card> deck = new ArrayList<Card>();
 
 	public Player() {
 		super();
 		this.health = 20;
 		this.mana = 0;
-		initDeck();
 	}
 	public Player(int health, int mana) {
 		super();
 		this.health = health;
 		this.mana = mana;
-		initDeck();
 	}
 	public int getHealth() {
 		return health;
@@ -45,11 +43,16 @@ public class Player {
 	public void setMana(int mana) {
 		this.mana = mana;
 	}
-	public void drawACard(){
-		this.cardsInHand.add(this.deck.get(0));
-		this.deck.remove(0);
+	public Card drawACard(){
+		if(cardsInHand.size() < 6){
+			Card card = this.deck.get(0);
+			this.cardsInHand.add(card);
+			this.deck.remove(0);
+			return card;
+		}
+		return null;
 	}
-	private void initDeck(){
+	public void initHumanPlayerDeck(){
 		Card cardTemp;
 		int id = 0;
 		cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_truestrike, id++, Card.class);
