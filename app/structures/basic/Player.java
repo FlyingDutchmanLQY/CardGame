@@ -44,7 +44,7 @@ public class Player {
 		this.mana = mana;
 	}
 	public Card drawACard(){
-		if(cardsInHand.size() < 6){
+		if(cardsInHand.size() <= 6){
 			Card card = this.deck.get(0);
 			this.cardsInHand.add(card);
 			this.deck.remove(0);
@@ -52,6 +52,7 @@ public class Player {
 		}
 		return null;
 	}
+
 	public void initHumanPlayerDeck(){
 		Card cardTemp;
 		int id = 0;
