@@ -867,9 +867,9 @@ function playUnitAnimation(message) {
 function deleteCard(message) {
 	var card = handContainers[message.position-1];
 	g.stage.removeChild(card);
-	handContainers[message.position]=null;
-	handSprites[message.position]=null;
-	cardJSON[message.position]=null;
+	handContainers[message.position-1]=null;
+	handSprites[message.position-1]=null;
+	cardJSON[message.position-1]=null;
 	prevewCountdown = 0;
 }
 
