@@ -155,7 +155,7 @@ function drawCard(message) {
 	handContainers[handIndex] = cardContainer;
 	
 	
-	cardContainer.position.x = 400+(handIndex*220);
+	cardContainer.position.x = 200+(handIndex*220);
 	cardContainer.position.y = 880;
 
 	g.stage.addChild(cardContainer);
