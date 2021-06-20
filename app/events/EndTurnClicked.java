@@ -34,18 +34,18 @@ public class EndTurnClicked implements EventProcessor{
 
 		BasicCommands.addPlayer1Notification(out,"It's turn " + gameState.turn,2);
 		try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
-//
+
 		//set mana
 		gameState.humanPlayer.setMana(gameState.turn);
 		BasicCommands.setPlayer1Mana(out,gameState.humanPlayer);
 
 		//draw card
 
-		if(gameState.humanPlayer.cardsInHand.size() <= 6) {
+		if(gameState.humanPlayer.cardsInHand.size() < 6) {
 			gameState.humanPlayer.drawACard();
-			Card card = gameState.humanPlayer.drawACard();
-			BasicCommands.drawCard(out, card, 3, 0);
+			gameState.humanPlayer.updateHandCardsView(out);
 			try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
 		}
+		//System.out.println(gameState.humanPlayer.cardsInHand.size());
 	}
 }
