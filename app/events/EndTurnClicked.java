@@ -44,10 +44,8 @@ public class EndTurnClicked implements EventProcessor{
 		if(gameState.humanPlayer.cardsInHand.size() <= 6) {
 			gameState.humanPlayer.drawACard();
 			Card card = gameState.humanPlayer.drawACard();
-			BasicCommands.drawCard(out, card, gameState.humanPlayer.index_cardInHand++, 0);
+			BasicCommands.drawCard(out, card, 3, 0);
 			try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
 		}
 	}
-	}
-
 }
