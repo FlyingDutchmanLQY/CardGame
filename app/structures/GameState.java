@@ -23,7 +23,7 @@ public class GameState {
     public ArrayList<Unit> unitList = new ArrayList<Unit>();
     public HumanPlayer humanPlayer;
     public AIPlayer AIPlayer;
-    public int turn;
+    public int turn = 0;
 	
 	
 }
