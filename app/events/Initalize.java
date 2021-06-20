@@ -47,10 +47,21 @@ public class Initalize implements EventProcessor{
 		BasicCommands.setPlayer1Mana(out, gameState.humanPlayer);
 
 		//画单位
-		Unit unit = BasicObjectBuilders.loadUnit(StaticConfFiles.humanAvatar, 0, Unit.class);
-		gameState.unitList.add(unit);
-		unit.setPositionByTile(gameState.board[1][2]);
-		BasicCommands.drawUnit(out, unit, gameState.board[1][2]);
+		Unit humanAvatar = BasicObjectBuilders.loadUnit(StaticConfFiles.humanAvatar, 0, Unit.class);
+		gameState.unitList.add(humanAvatar);
+		humanAvatar.setPositionByTile(gameState.board[1][2]);
+		BasicCommands.drawUnit(out, humanAvatar, gameState.board[1][2]);
+		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+		BasicCommands.setUnitAttack(out,humanAvatar,5);
+		BasicCommands.setUnitHealth(out,humanAvatar,20);
+
+		Unit unit_ai = BasicObjectBuilders.loadUnit(StaticConfFiles.aiAvatar, 1, Unit.class);
+		gameState.unitList.add(unit_ai);
+		unit_ai.setPositionByTile(gameState.board[7][2]);
+		BasicCommands.drawUnit(out, unit_ai, gameState.board[7][2]);
+		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+		BasicCommands.setUnitAttack(out,unit_ai,5);
+		BasicCommands.setUnitHealth(out,unit_ai,20);
 
 		Card card = gameState.humanPlayer.drawACard();
 		BasicCommands.drawCard(out, card, 1, 0);
