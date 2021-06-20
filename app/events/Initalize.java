@@ -61,14 +61,11 @@ public class Initalize implements EventProcessor{
 		BasicCommands.setUnitAttack(out,unit_ai,5);
 		BasicCommands.setUnitHealth(out,unit_ai,20);
 
-		Card card = gameState.humanPlayer.drawACard();
-		BasicCommands.drawCard(out, card, 1, 0);
-		card = gameState.humanPlayer.drawACard();
-		BasicCommands.drawCard(out, card, 4, 0);
-		try {Thread.sleep(5000);} catch (InterruptedException e) {e.printStackTrace();}
-		BasicCommands.deleteCard(out,1);
-		//Card hailstone_golem = BasicObjectBuilders.loadCard(StaticConfFiles.c_hailstone_golem, 0, Card.class);
-		//BasicCommands.drawCard(out, hailstone_golem, 1, 0);
+		EndTurnClicked firstTurn = new EndTurnClicked();  //manually trigger first turn
+		firstTurn.processEvent(out, gameState, message);
+
+
+
 	}
 }
 
