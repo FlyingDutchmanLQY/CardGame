@@ -1,5 +1,7 @@
 package structures.basic;
 
+import akka.actor.ActorRef;
+import commands.BasicCommands;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 
@@ -45,13 +47,15 @@ public class Player {
 	}
 
 	public Card drawACard(){
-		if(cardsInHand.size() <= 6){
+		if(cardsInHand.size() < 6){
 			Card card = this.deck.get(0);
 			this.cardsInHand.add(card);
 			this.deck.remove(0);
 			return card;
 		}
-		return null;
+		else{
+			return null;
+		}
 	}
 
 	void shuffleDeck(){
@@ -59,6 +63,15 @@ public class Player {
 		Random ran = new Random();
 		while(times-- > 0){
 			Collections.swap(this.deck, ran.nextInt(10), ran.nextInt(10));
+		}
+	}
+
+	public void updateHandCardsView(ActorRef out){
+		for(int i=1;i<=6;i++){
+			BasicCommands.deleteCard(out, i);
+		}
+		for(int i=0;i<this.cardsInHand.size();i++){
+			BasicCommands.drawCard(out, this.cardsInHand.get(i), i+1, 0);
 		}
 	}
 }
