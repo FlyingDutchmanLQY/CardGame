@@ -2,7 +2,8 @@ package structures;
 
 import akka.actor.ActorRef;
 import commands.BasicCommands;
-import structures.basic.Player;
+import structures.basic.HumanPlayer;
+import structures.basic.AIPlayer;
 import structures.basic.Tile;
 import structures.basic.Unit;
 import utils.BasicObjectBuilders;
@@ -20,8 +21,9 @@ public class GameState {
     //画棋盘
     public Tile board[][] = new Tile[9][5];
     public ArrayList<Unit> unitList = new ArrayList<Unit>();
-    public Player humanPlayer, AIPlayer;
-	public int turn;
+    public HumanPlayer humanPlayer;
+    public AIPlayer AIPlayer;
+    public int turn;
 	
 	
 }

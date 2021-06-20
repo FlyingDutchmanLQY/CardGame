@@ -43,6 +43,7 @@ public class Player {
 	public void setMana(int mana) {
 		this.mana = mana;
 	}
+
 	public Card drawACard(){
 		if(cardsInHand.size() <= 6){
 			Card card = this.deck.get(0);
@@ -53,32 +54,7 @@ public class Player {
 		return null;
 	}
 
-	public void initHumanPlayerDeck(){
-		Card cardTemp;
-		int id = 0;
-		cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_truestrike, id++, Card.class);
-		this.deck.add(cardTemp);
-		cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_sundrop_elixir, id++, Card.class);
-		this.deck.add(cardTemp);
-		cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_comodo_charger, id++, Card.class);
-		this.deck.add(cardTemp);
-		cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_azure_herald, id++, Card.class);
-		this.deck.add(cardTemp);
-		cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_azurite_lion, id++, Card.class);
-		this.deck.add(cardTemp);
-		cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_fire_spitter, id++, Card.class);
-		this.deck.add(cardTemp);
-		cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_hailstone_golem, id++, Card.class);
-		this.deck.add(cardTemp);
-		cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_ironcliff_guardian, id++, Card.class);
-		this.deck.add(cardTemp);
-		cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_pureblade_enforcer, id++, Card.class);
-		this.deck.add(cardTemp);
-		cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_silverguard_knight, id++, Card.class);
-		this.deck.add(cardTemp);
-		shuffleDeck();
-	}
-	private void shuffleDeck(){
+	void shuffleDeck(){
 		int times = 50;
 		Random ran = new Random();
 		while(times-- > 0){
