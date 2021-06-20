@@ -21,7 +21,7 @@ public class GameState {
     public Tile board[][] = new Tile[9][5];
     public ArrayList<Unit> unitList = new ArrayList<Unit>();
     public Player humanPlayer, AIPlayer;
-	
+	public int turn;
 	
 	
 }
