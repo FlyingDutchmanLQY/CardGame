@@ -20,12 +20,19 @@ import structures.GameState;
  */
 public class CardClicked implements EventProcessor{
 
+	public static int handPosition = 0;
+	public static boolean isCardClicked = false;
+
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
-		
-		int handPosition = message.get("position").asInt();
-		
-		
+
+		handPosition = message.get("position").asInt();
+		isCardClicked = true;
+
+		//remove card in hand
+//		BasicCommands.deleteCard(out,handPosition);
+
+
 	}
 
 }
