@@ -1,0 +1,19 @@
+# file 不需要提交的文件
+.classpath
+.project
+build.sbt
+LICENSE
+NOTICE
+sbt
+sbt.bat
+# dir 不需要提交的目录
+/.idea
+/.settings
+/_
+/bin
+/logs
+/null
+/project
+/sbt-dist
+/scripts
+/target
