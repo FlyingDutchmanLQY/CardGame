@@ -1,9 +1,6 @@
 package structures;
 
-import structures.basic.Card;
-import structures.basic.Player;
-import structures.basic.Tile;
-import structures.basic.Unit;
+import structures.basic.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +28,7 @@ public class GameState {
 
    public static HashMap<Tile,Unit> map_Unit = new HashMap<>();
 
-   public static Player humanPlayer = new Player(20,0), AIPlayer = new Player(20,0) ;
+   public static HumanPlayer humanPlayer = new HumanPlayer(20,0);
+   public static AIPlayer AIPlayer = new AIPlayer(20,0) ;
 
 }

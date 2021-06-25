@@ -5,12 +5,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import commands.BasicCommands;
 import structures.GameState;
 import structures.basic.Card;
-import structures.basic.Player;
 import structures.basic.Unit;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
-
-import java.util.Random;
 
 
 /**
@@ -42,8 +39,10 @@ public class Initalize implements EventProcessor{
 		}
 
 		//属性初始化
-		gameState.humanPlayer = new Player(20, 0);
-		gameState.AIPlayer = new Player(20, 0);
+//		gameState.humanPlayer = new Player(20, 0);
+//		gameState.AIPlayer = new Player(20, 0);
+		GameState.humanPlayer.initDeck();
+		GameState.AIPlayer.initDeck();
 		BasicCommands.setPlayer1Health(out, gameState.humanPlayer);
 		BasicCommands.setPlayer2Health(out, gameState.AIPlayer);
 //		gameState.humanPlayer.setMana(1);
@@ -74,17 +73,17 @@ public class Initalize implements EventProcessor{
 		unit_ai.attack = 5;
 
 		//init deck
-		int id = 0;
-		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_truestrike, id++, Card.class));
-		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_sundrop_elixir, id++, Card.class));
-		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_comodo_charger, id++, Card.class));
-		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_azure_herald, id++, Card.class));
-		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_azurite_lion, id++, Card.class));
-		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_fire_spitter, id++, Card.class));
-		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_hailstone_golem, id++, Card.class));
-		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_ironcliff_guardian, id++, Card.class));
-		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_pureblade_enforcer, id++, Card.class));
-		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_silverguard_knight, id++, Card.class));
+//		int id = 0;
+//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_truestrike, id++, Card.class));
+//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_sundrop_elixir, id++, Card.class));
+//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_comodo_charger, id++, Card.class));
+//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_azure_herald, id++, Card.class));
+//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_azurite_lion, id++, Card.class));
+//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_fire_spitter, id++, Card.class));
+//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_hailstone_golem, id++, Card.class));
+//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_ironcliff_guardian, id++, Card.class));
+//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_pureblade_enforcer, id++, Card.class));
+//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_silverguard_knight, id++, Card.class));
 
 		//init unit
 		GameState.unitStaticConfFiles.add(StaticConfFiles.u_comodo_charger);
@@ -106,10 +105,12 @@ public class Initalize implements EventProcessor{
 
 		//drew card
 
-		Random random = new Random();
-		Card card = GameState.cards.get(random.nextInt(GameState.cards.size()));
-		BasicCommands.drawCard(out,card,GameState.humanPlayer.index_cardInHand++,0);
-		GameState.humanPlayer.cardsInPlayerHand.add(card);
+//		Random random = new Random();
+//		Card card = GameState.cards.get(random.nextInt(GameState.cards.size()));
+		Card card = GameState.humanPlayer.chooseACard();
+//		BasicCommands.drawCard(out,card,GameState.humanPlayer.index_cardInHand++,0);
+//		GameState.humanPlayer.cardsInPlayerHand.add(card);
+		GameState.humanPlayer.updateHandCardsView(out);
 		try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
 
 
