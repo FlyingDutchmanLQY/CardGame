@@ -10,6 +10,7 @@ import structures.basic.Tile;
 import structures.basic.Unit;
 import structures.basic.UnitAnimationType;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -37,6 +38,7 @@ public class TileClicked implements EventProcessor{
 	public static int index_move = 1;
 	public static Tile start_move_tile;
 	public static Unit unit_Click;
+	public static ArrayList<Card> cardsShouldBeRemove = new ArrayList<>();
 
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
@@ -154,10 +156,10 @@ public class TileClicked implements EventProcessor{
 			}else if(!CardClicked.tiles_canSummon.contains(GameState.board[tilex][tiley])){
 				BasicCommands.addPlayer1Notification(out,"Can't summon",2);
 			}else{
-//				Card card = GameState.humanPlayer.cardsInPlayerHand.get(CardClicked.handPosition - 1);
 				GameState.humanPlayer.setMana(mana);
 				BasicCommands.setPlayer1Mana(out,GameState.humanPlayer);
-				GameState.humanPlayer.cardsInPlayerHand.remove(CardClicked.handPosition - 1);
+				cardsShouldBeRemove.add(GameState.humanPlayer.cardsInPlayerHand.get(CardClicked.handPosition - 1));
+//				GameState.humanPlayer.cardsInPlayerHand.remove(CardClicked.handPosition - 1);
 				try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
 //				GameState.humanPlayer.updateHandCardsView(out);
 				BasicCommands.deleteCard(out,CardClicked.handPosition);

@@ -87,14 +87,14 @@ public class Initalize implements EventProcessor{
 //		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_silverguard_knight, id++, Card.class));
 
 		//init unit
-		GameState.unitStaticConfFiles.add(StaticConfFiles.u_comodo_charger);
-		GameState.unitStaticConfFiles.add(StaticConfFiles.u_hailstone_golem );
-		GameState.unitStaticConfFiles.add(StaticConfFiles.u_azure_herald);
-		GameState.unitStaticConfFiles.add(StaticConfFiles.u_azurite_lion);
-		GameState.unitStaticConfFiles.add(StaticConfFiles.u_pureblade_enforcer);
-		GameState.unitStaticConfFiles.add(StaticConfFiles.u_ironcliff_guardian);
-		GameState.unitStaticConfFiles.add(StaticConfFiles.u_silverguard_knight);
-		GameState.unitStaticConfFiles.add(StaticConfFiles.u_fire_spitter);
+//		GameState.unitStaticConfFiles.add(StaticConfFiles.u_comodo_charger);
+//		GameState.unitStaticConfFiles.add(StaticConfFiles.u_hailstone_golem );
+//		GameState.unitStaticConfFiles.add(StaticConfFiles.u_azure_herald);
+//		GameState.unitStaticConfFiles.add(StaticConfFiles.u_azurite_lion);
+//		GameState.unitStaticConfFiles.add(StaticConfFiles.u_pureblade_enforcer);
+//		GameState.unitStaticConfFiles.add(StaticConfFiles.u_ironcliff_guardian);
+//		GameState.unitStaticConfFiles.add(StaticConfFiles.u_silverguard_knight);
+//		GameState.unitStaticConfFiles.add(StaticConfFiles.u_fire_spitter);
 
 
 		BasicCommands.addPlayer1Notification(out,"It's turn " + GameState.turn,2);

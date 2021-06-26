@@ -34,6 +34,13 @@ public class EndTurnClicked implements EventProcessor{
 		}
 
 		else{
+			CardClicked.isCardClicked = false;
+			TileClicked.isMoveUnit = false;
+			TileClicked.isTileClicked = false;
+			for(Card card : TileClicked.cardsShouldBeRemove){
+				GameState.humanPlayer.cardsInPlayerHand.remove(card);
+			}
+			TileClicked.cardsShouldBeRemove.clear();
 			BasicCommands.addPlayer1Notification(out, "It's turn " + GameState.turn, 2);
 			try {
 				Thread.sleep(2000);
