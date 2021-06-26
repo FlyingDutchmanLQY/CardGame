@@ -25,6 +25,6 @@ card和unit 对应 ：class gamestate 解决
 
 6.26
 
-召唤卡的范围
+召唤卡的范围 解决
 unit无攻击力和生命值 
 
