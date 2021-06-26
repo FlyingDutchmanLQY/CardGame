@@ -54,6 +54,7 @@ public class Initalize implements EventProcessor{
 		unit_human.setPositionByTile(gameState.board[1][2]);
 		BasicCommands.drawUnit(out, unit_human, gameState.board[1][2]);
 		GameState.map_Unit.put(gameState.board[1][2],unit_human);
+		GameState.humanPlayer.map_Unit_human.put(gameState.board[1][2],unit_human);
 		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.setUnitAttack(out,unit_human,5);
 		BasicCommands.setUnitHealth(out,unit_human,20);

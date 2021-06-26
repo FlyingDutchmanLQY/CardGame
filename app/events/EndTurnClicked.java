@@ -42,7 +42,10 @@ public class EndTurnClicked implements EventProcessor{
 			}
 //
 			//set mana
-			GameState.humanPlayer.setMana(GameState.turn);
+			int mana_now = 0;
+			if(GameState.turn <= 10) mana_now = GameState.turn;
+			else mana_now = 10;
+			GameState.humanPlayer.setMana(mana_now);
 			BasicCommands.setPlayer1Mana(out, GameState.humanPlayer);
 
 			//drew card
