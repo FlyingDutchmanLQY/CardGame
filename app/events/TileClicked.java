@@ -167,6 +167,7 @@ public class TileClicked implements EventProcessor{
 //				unit.setPositionByTile(GameState.board[tilex][tiley]);
 				//使用的手中卡牌GameState.humanPlayer.cardsInPlayerHand.get(CardClicked.handPosition)
 				BasicCommands.drawUnit(out,unit,GameState.board[tilex][tiley]);
+				try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 				BasicCommands.setUnitHealth(out,unit,unit.health);
 				BasicCommands.setUnitAttack(out,unit,unit.attack);
 				GameState.map_Unit.put(GameState.board[tilex][tiley],unit);
