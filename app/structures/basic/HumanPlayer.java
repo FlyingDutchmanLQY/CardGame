@@ -30,6 +30,8 @@ public class HumanPlayer extends Player{
 
         cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_comodo_charger, id, Card.class);
         unit = BasicObjectBuilders.loadUnit(StaticConfFiles.u_comodo_charger,id++,Unit.class);
+        unit.attack = cardTemp.bigCard.attack;
+        unit.health = cardTemp.bigCard.health;
         System.out.println(unit.health);
         System.out.println(unit.attack);
         this.deck.add(cardTemp);
@@ -37,36 +39,50 @@ public class HumanPlayer extends Player{
 
         cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_azure_herald, id++, Card.class);
         unit = BasicObjectBuilders.loadUnit(StaticConfFiles.u_azure_herald,id++,Unit.class);
+        unit.attack = cardTemp.bigCard.attack;
+        unit.health = cardTemp.bigCard.health;
         this.deck.add(cardTemp);
         human_cardToUnit.put(cardTemp,unit);
 
         cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_azurite_lion, id++, Card.class);
         unit = BasicObjectBuilders.loadUnit(StaticConfFiles.u_azurite_lion,id++,Unit.class);
+        unit.attack = cardTemp.bigCard.attack;
+        unit.health = cardTemp.bigCard.health;
         this.deck.add(cardTemp);
         human_cardToUnit.put(cardTemp,unit);
 
         cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_fire_spitter, id++, Card.class);
         unit = BasicObjectBuilders.loadUnit(StaticConfFiles.u_fire_spitter,id++,Unit.class);
+        unit.attack = cardTemp.bigCard.attack;
+        unit.health = cardTemp.bigCard.health;
         this.deck.add(cardTemp);
         human_cardToUnit.put(cardTemp,unit);
 
         cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_hailstone_golem, id++, Card.class);
         unit = BasicObjectBuilders.loadUnit(StaticConfFiles.u_hailstone_golem,id++,Unit.class);
+        unit.attack = cardTemp.bigCard.attack;
+        unit.health = cardTemp.bigCard.health;
         this.deck.add(cardTemp);
         human_cardToUnit.put(cardTemp,unit);
 
         cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_ironcliff_guardian, id++, Card.class);
         unit = BasicObjectBuilders.loadUnit(StaticConfFiles.u_ironcliff_guardian,id++,Unit.class);
+        unit.attack = cardTemp.bigCard.attack;
+        unit.health = cardTemp.bigCard.health;
         this.deck.add(cardTemp);
         human_cardToUnit.put(cardTemp,unit);
 
         cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_pureblade_enforcer, id++, Card.class);
         unit = BasicObjectBuilders.loadUnit(StaticConfFiles.u_pureblade_enforcer,id++,Unit.class);
+        unit.attack = cardTemp.bigCard.attack;
+        unit.health = cardTemp.bigCard.health;
         this.deck.add(cardTemp);
         human_cardToUnit.put(cardTemp,unit);
 
         cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_silverguard_knight, id++, Card.class);
         unit = BasicObjectBuilders.loadUnit(StaticConfFiles.u_silverguard_knight,id++,Unit.class);
+        unit.attack = cardTemp.bigCard.attack;
+        unit.health = cardTemp.bigCard.health;
         this.deck.add(cardTemp);
         human_cardToUnit.put(cardTemp,unit);
         shuffleDeck();
