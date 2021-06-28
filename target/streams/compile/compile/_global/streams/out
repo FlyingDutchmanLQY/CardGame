@@ -1,0 +1,11 @@
+[0m[[0m[31merror[0m] [0m[0mIO error while decoding D:\林清源\UoG\team project\ITSD-DT2021-Template\ITSD-DT2021-Template\target\scala-2.13\routes\main\controllers\ReverseRoutes.scala with UTF-8: MALFORMED[1][0m
+[0m[[0m[31merror[0m] [0m[0mPlease try specifying another one using the -encoding option[0m
+[0m[[0m[31merror[0m] [0m[0mIO error while decoding D:\林清源\UoG\team project\ITSD-DT2021-Template\ITSD-DT2021-Template\target\scala-2.13\routes\main\controllers\javascript\JavaScriptReverseRoutes.scala with UTF-8: MALFORMED[1][0m
+[0m[[0m[31merror[0m] [0m[0mPlease try specifying another one using the -encoding option[0m
+[0m[[0m[31merror[0m] [0m[0mIO error while decoding D:\林清源\UoG\team project\ITSD-DT2021-Template\ITSD-DT2021-Template\target\scala-2.13\routes\main\controllers\routes.java with UTF-8: MALFORMED[1][0m
+[0m[[0m[31merror[0m] [0m[0mPlease try specifying another one using the -encoding option[0m
+[0m[[0m[31merror[0m] [0m[0mIO error while decoding D:\林清源\UoG\team project\ITSD-DT2021-Template\ITSD-DT2021-Template\target\scala-2.13\routes\main\router\Routes.scala with UTF-8: MALFORMED[1][0m
+[0m[[0m[31merror[0m] [0m[0mPlease try specifying another one using the -encoding option[0m
+[0m[[0m[31merror[0m] [0m[0mIO error while decoding D:\林清源\UoG\team project\ITSD-DT2021-Template\ITSD-DT2021-Template\target\scala-2.13\routes\main\router\RoutesPrefix.scala with UTF-8: MALFORMED[1][0m
+[0m[[0m[31merror[0m] [0m[0mPlease try specifying another one using the -encoding option[0m
+[0m[[0m[31merror[0m] [0m[0m5 errors found[0m
