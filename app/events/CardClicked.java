@@ -36,27 +36,28 @@ public class CardClicked implements EventProcessor{
 		isCardClicked = true;
 		BasicCommands.addPlayer1Notification(out,"please choose a tile", 3);
 
-		Iterator iterator = GameState.humanPlayer.map_Unit_human.entrySet().iterator();
+		//TODO 修改攻击的范围
+		Iterator iterator = gameState.humanPlayer.map_Unit_human.entrySet().iterator();
 		while(iterator.hasNext()){
 			Map.Entry entry = (Map.Entry) iterator.next();
 			Tile tile = (Tile) entry.getKey();
 			int x = tile.getTilex();
 			int y = tile.getTiley();
-			if(x < 8 && GameState.map_Unit.get(GameState.board[x+1][y]) == null){
-				tiles_canSummon.add(GameState.board[x+1][y]);
-				BasicCommands.drawTile(out,GameState.board[x+1][y],1);
+			if(x < 8 && gameState.map_Unit.get(gameState.board[x+1][y]) == null){
+				tiles_canSummon.add(gameState.board[x+1][y]);
+				BasicCommands.drawTile(out,gameState.board[x+1][y],1);
 			}
-			if(0 < x && GameState.map_Unit.get(GameState.board[x-1][y]) == null){
-				tiles_canSummon.add(GameState.board[x-1][y]);
-				BasicCommands.drawTile(out,GameState.board[x-1][y],1);
+			if(0 < x && gameState.map_Unit.get(gameState.board[x-1][y]) == null){
+				tiles_canSummon.add(gameState.board[x-1][y]);
+				BasicCommands.drawTile(out,gameState.board[x-1][y],1);
 			}
-			if(y < 4 && GameState.map_Unit.get(GameState.board[x][y+1]) == null){
-				tiles_canSummon.add(GameState.board[x][y+1]);
-				BasicCommands.drawTile(out,GameState.board[x][y+1],1);
+			if(y < 4 && gameState.map_Unit.get(gameState.board[x][y+1]) == null){
+				tiles_canSummon.add(gameState.board[x][y+1]);
+				BasicCommands.drawTile(out,gameState.board[x][y+1],1);
 			}
-			if(0 < y && GameState.map_Unit.get(GameState.board[x][y-1]) == null){
-				tiles_canSummon.add(GameState.board[x][y-1]);
-				BasicCommands.drawTile(out,GameState.board[x][y-1],1);
+			if(0 < y && gameState.map_Unit.get(gameState.board[x][y-1]) == null){
+				tiles_canSummon.add(gameState.board[x][y-1]);
+				BasicCommands.drawTile(out,gameState.board[x][y-1],1);
 			}
 		}
 

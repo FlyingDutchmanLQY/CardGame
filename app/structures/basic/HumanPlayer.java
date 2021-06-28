@@ -28,12 +28,14 @@ public class HumanPlayer extends Player{
         cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_sundrop_elixir, id++, Card.class);
         this.deck.add(cardTemp);
 
+        //TODO unit未有攻击力和生命值
         cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_comodo_charger, id, Card.class);
         unit = BasicObjectBuilders.loadUnit(StaticConfFiles.u_comodo_charger,id++,Unit.class);
+
+        System.out.println(cardTemp.bigCard.attack);
         unit.attack = cardTemp.bigCard.attack;
-        unit.health = cardTemp.bigCard.health;
-        System.out.println(unit.health);
         System.out.println(unit.attack);
+        unit.health = cardTemp.bigCard.health;
         this.deck.add(cardTemp);
         human_cardToUnit.put(cardTemp,unit);
 
