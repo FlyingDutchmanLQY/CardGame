@@ -1,14 +1,9 @@
 package structures;
 
-import akka.actor.ActorRef;
-import commands.BasicCommands;
-import structures.basic.HumanPlayer;
-import structures.basic.AIPlayer;
-import structures.basic.Tile;
-import structures.basic.Unit;
-import utils.BasicObjectBuilders;
+import structures.basic.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This class can be used to hold information about the on-going game.
@@ -18,12 +13,20 @@ import java.util.ArrayList;
  *
  */
 public class GameState {
-    //画棋盘
-    public Tile board[][] = new Tile[9][5];
-    public ArrayList<Unit> unitList = new ArrayList<Unit>();
-    public HumanPlayer humanPlayer;
-    public AIPlayer AIPlayer;
-    public int turn = 0;
-	
-	
+
+   public int turn = 1;
+
+   public Tile[][] board = new Tile[9][5];
+
+   public ArrayList<Card> cards = new ArrayList<>();
+
+   public ArrayList<Unit> unitList = new ArrayList<Unit>();
+
+   public int id_Unit = 0;
+
+   public HashMap<Tile,Unit> map_Unit = new HashMap<>();
+
+   public HumanPlayer humanPlayer = new HumanPlayer(20,0);
+   public AIPlayer AIPlayer = new AIPlayer(20,0) ;
+
 }

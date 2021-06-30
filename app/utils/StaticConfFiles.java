@@ -1,7 +1,5 @@
 package utils;
 
-import java.util.HashMap;
-
 /**
  * This is a utility class that just has short-cuts to the location of various
  * config files. 
@@ -71,18 +69,5 @@ public class StaticConfFiles {
 	public final static String f1_martyrdom = "conf/gameconfs/effects/f1_martyrdom.json";
 	public final static String f1_projectiles = "conf/gameconfs/effects/f1_projectiles.json";
 	public final static String f1_summon = "conf/gameconfs/effects/f1_summon.json";
-
-	//Converting card name to json file URI for unit
-	public final static HashMap<String, String> NameToURI = new HashMap<String, String>() {
-		{
-			NameToURI.put("Comodo Charger", "conf/gameconfs/units/comodo_charger.json");
-			NameToURI.put("Azure Herald", "conf/gameconfs/units/azure_herald.json");
-			NameToURI.put("Azurite Lion", "conf/gameconfs/units/azurite_lion.json");
-			NameToURI.put("Fire Spitter", "conf/gameconfs/units/fire_spitter.json");
-			NameToURI.put("Hailstone Golem", "conf/gameconfs/units/hailstone_golem.json");
-			NameToURI.put("Ironcliff Guardian", "conf/gameconfs/units/ironcliff_guardian.json");
-			NameToURI.put("Pureblade Enforcer", "conf/gameconfs/units/pureblade_enforcer.json");
-			NameToURI.put("Silverguard Knight", "conf/gameconfs/units/silverguard_knight.json");
-		}
-	};
+	
 }

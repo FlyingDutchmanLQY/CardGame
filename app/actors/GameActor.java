@@ -1,28 +1,18 @@
 package actors;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
+import akka.actor.AbstractActor;
+import akka.actor.ActorRef;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import akka.actor.AbstractActor;
-import akka.actor.ActorRef;
-import events.CardClicked;
-import events.EndTurnClicked;
-import events.EventProcessor;
-import events.Heartbeat;
-import events.Initalize;
-import events.OtherClicked;
-import events.TileClicked;
-import events.UnitMoving;
-import events.UnitStopped;
+import events.*;
 import play.libs.Json;
 import structures.GameState;
 import utils.ImageListForPreLoad;
-import play.libs.Json;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The game actor is an Akka Actor that receives events from the user front-end UI (e.g. when 
@@ -37,6 +27,11 @@ import play.libs.Json;
 public class GameActor extends AbstractActor {
 
 	private ObjectMapper mapper = new ObjectMapper(); // Jackson Java Object Serializer, is used to turn java objects to Strings
+
+	public ActorRef getOut() {
+		return out;
+	}
+
 	private ActorRef out; // The ActorRef can be used to send messages to the front-end UI
 	private Map<String,EventProcessor> eventProcessors; // Classes used to process each type of event
 	private GameState gameState; // A class that can be used to hold game state information

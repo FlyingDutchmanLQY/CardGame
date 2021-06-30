@@ -1,14 +1,14 @@
 package utils;
 
-import java.io.File;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import structures.basic.Card;
 import structures.basic.EffectAnimation;
 import structures.basic.Tile;
 import structures.basic.Unit;
+
+import java.io.File;
+
 
 /**
  * This class contains methods for producing basic objects from configuration files
@@ -71,7 +71,7 @@ public class BasicObjectBuilders {
 	 * @param configFile
 	 * @return
 	 */
-	public static Unit loadUnit(String configFile, int id,  Class<? extends Unit> classType) {
+	public static Unit loadUnit(String configFile, int id, Class<? extends Unit> classType) {
 		
 		try {
 			Unit unit = mapper.readValue(new File(configFile), classType);
