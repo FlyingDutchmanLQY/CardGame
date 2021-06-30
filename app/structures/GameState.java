@@ -18,8 +18,6 @@ public class GameState {
 
    public Tile[][] board = new Tile[9][5];
 
-//   public static ArrayList<String> unitStaticConfFiles = new ArrayList<>();
-
    public ArrayList<Card> cards = new ArrayList<>();
 
    public ArrayList<Unit> unitList = new ArrayList<Unit>();

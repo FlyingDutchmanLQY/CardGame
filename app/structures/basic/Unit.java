@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import commands.BasicCommands;
 import structures.GameState;
+import utils.BasicObjectBuilders;
+import utils.StaticConfFiles;
 
 import static events.TileClicked.tiles_canMove;
 
@@ -28,6 +30,7 @@ public class Unit {
 	int id;
 	public int health;
 	public int attack;
+	public int rawHealth;
 	UnitAnimationType animation;
 	Position position;
 	UnitAnimationSet animations;
@@ -206,46 +209,113 @@ public class Unit {
 			unit.setPositionByTile(end);
 			gameState.map_Unit.put(end, unit);
 			gameState.humanPlayer.map_Unit_human.put(end, unit);
-//						rangeOfMove(out,start_move_tile,0);
-//						tiles_canMove.clear();
 		}else{
 			BasicCommands.addPlayer1Notification(out,"can't move",2);
 		}
 
-//					rangeOfMove(out,start_move_tile,0);
 	}
 
 	public void attack(ActorRef out, GameState gameState, Tile start, Tile end){
-		if(!isAttack(out, start, end)){
-			BasicCommands.addPlayer1Notification(out,"can't attack",2);
+		if(gameState.AIPlayer.map_Unit_ai.containsKey(end)){
+			if (gameState.map_Unit.get(start).getId() == 8) {
+				attackAnywhere(out, gameState, start, end);
+			} else if (gameState.map_Unit.get(start).getId() == 18) {
+				attackAnywhere(out, gameState, start, end);
+			} else if (!isAttack(out, start, end)) {
+				BasicCommands.addPlayer1Notification(out, "can't attack", 2);
+			} else {
+				mustAttack(out, gameState, start, end);
+			}
 		}else{
+			BasicCommands.addPlayer1Notification(out, "can't attack yourself", 2);
+		}
+	}
+
+
+	public void mustAttack(ActorRef out, GameState gameState, Tile start, Tile end){
 			Unit unit_Start = gameState.map_Unit.get(start);
 			Unit unit_End = gameState.map_Unit.get(end);
-			BasicCommands.playUnitAnimation(out, unit_Start, UnitAnimationType.attack);
-			BasicCommands.playUnitAnimation(out,unit_End,UnitAnimationType.hit);
-			unit_End.health -= unit_Start.attack;
-			BasicCommands.setUnitHealth(out, unit_End, unit_End.health);
-			int id = unit_End.getId();
+			if(unit_Start.getId() == 7){
+				twoAttack(out,gameState,start,end);
+			}
+			if(unit_Start.getId() == 17){
+				twoAttack(out,gameState,start,end);
+			}else{
+				BasicCommands.playUnitAnimation(out, unit_Start, UnitAnimationType.attack);
+				BasicCommands.playUnitAnimation(out,unit_End,UnitAnimationType.hit);
+				changeHealth(out,gameState,end,unit_Start.attack);
+			}
+		}
+
+		public void changeHealth(ActorRef out, GameState gameState, Tile tile, int health){
+			Unit unit = gameState.map_Unit.get(tile);
+			unit.health -= health;
+			BasicCommands.setUnitHealth(out, unit, unit.health);
+			determineUnitStatue(out,gameState,tile);
+			if(unit.getId() == 0 && health > 0){
+				for(Unit u : gameState.unitList){
+					if(u.getId() == 6){
+						BasicCommands.addPlayer1Notification(out,"Ability launch",2);
+						u.attack += 2;
+						BasicCommands.setUnitAttack(out,u,u.attack);
+					}
+					if(u.getId() == 16){
+						BasicCommands.addPlayer1Notification(out,"Ability launch",2);
+						u.attack += 2;
+						BasicCommands.setUnitAttack(out,u,u.attack);
+					}
+				}
+			}
+		}
+
+		public void determineUnitStatue(ActorRef out, GameState gameState,Tile tile){
+			Unit unit = gameState.map_Unit.get(tile);
+			int id = unit.getId();
 			if (id == 0) {
-				gameState.humanPlayer.setHealth(unit_End.health);
+				gameState.humanPlayer.setHealth(unit.health);
 				BasicCommands.setPlayer1Health(out, gameState.humanPlayer);
 			}
 			if (id == 1) {
-				gameState.AIPlayer.setHealth(unit_End.health);
+				gameState.AIPlayer.setHealth(unit.health);
 				BasicCommands.setPlayer2Health(out, gameState.AIPlayer);
 			}
-//					index_move = 0;
-//					isMoveUnit = false;
-			if (unit_End.health <= 0) {
-				BasicCommands.playUnitAnimation(out, unit_End, UnitAnimationType.death);
+			if (unit.health <= 0) {
+				BasicCommands.playUnitAnimation(out, unit, UnitAnimationType.death);
 				try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
-				BasicCommands.deleteUnit(out, unit_End);
-				gameState.map_Unit.remove(end);
-
-				BasicCommands.addPlayer1Notification(out, "unit died", 2);
+				BasicCommands.deleteUnit(out, unit);
+				if(id == 0 || id == 1){
+					BasicCommands.addPlayer1Notification(out,"Game Over",2);
+				}else {
+					gameState.map_Unit.remove(tile);
+					if(gameState.humanPlayer.map_Unit_human.containsKey(tile)) {
+						gameState.humanPlayer.map_Unit_human.remove(tile);
+						BasicCommands.addPlayer1Notification(out, "unit died", 2);
+					}else if(gameState.AIPlayer.map_Unit_ai.containsKey(tile)){
+						gameState.AIPlayer.map_Unit_ai.remove(tile);
+						BasicCommands.addPlayer1Notification(out, "unit died", 2);
+					}
+				}
 			}
 		}
-	}
+
+		public void twoAttack(ActorRef out,GameState gameState,Tile start, Tile end){
+			Unit unit_Start = gameState.map_Unit.get(start);
+			Unit unit_End = gameState.map_Unit.get(end);
+			BasicCommands.addPlayer1Notification(out,"Two attacks",2);
+			BasicCommands.playUnitAnimation(out, unit_Start, UnitAnimationType.attack);
+			try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+			BasicCommands.playUnitAnimation(out, unit_Start, UnitAnimationType.attack);
+			BasicCommands.playUnitAnimation(out,unit_End,UnitAnimationType.hit);
+			changeHealth(out,gameState,end,(2 * unit_Start.attack));
+		}
+
+		public void attackAnywhere(ActorRef out,GameState gameState, Tile start, Tile end){
+			BasicCommands.addPlayer1Notification(out,"attack any enemy",2);
+			BasicCommands.playProjectileAnimation(out, BasicObjectBuilders.loadEffect(StaticConfFiles.f1_projectiles),0,start,end);
+			try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
+			mustAttack(out, gameState, start, end);
+		}
+
 	
 	
 }

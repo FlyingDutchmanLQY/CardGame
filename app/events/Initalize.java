@@ -30,6 +30,14 @@ public class Initalize implements EventProcessor{
 //		CommandDemo.executeDemo(out);
 
 
+		CardClicked.isCardClicked = false;
+		TileClicked.isMoveOrAttackUnit = false;
+		TileClicked.isTileClicked = false;
+		TileClicked.tiles_canMove.clear();
+		gameState.cards.clear();
+		gameState.map_Unit.clear();
+		gameState.unitList.clear();
+
 		//画棋盘
 		for(int i=0;i<9;i++){
 			for(int j=0;j<5;j++){
@@ -39,14 +47,10 @@ public class Initalize implements EventProcessor{
 		}
 
 		//属性初始化
-//		gameState.humanPlayer = new Player(20, 0);
-//		gameState.AIPlayer = new Player(20, 0);
 		gameState.humanPlayer.initDeck();
 		gameState.AIPlayer.initDeck();
 		BasicCommands.setPlayer1Health(out, gameState.humanPlayer);
 		BasicCommands.setPlayer2Health(out, gameState.AIPlayer);
-//		gameState.humanPlayer.setMana(1);
-//		BasicCommands.setPlayer1Mana(out, gameState.humanPlayer);
 
 		//画单位
 		Unit unit_human = BasicObjectBuilders.loadUnit(StaticConfFiles.humanAvatar, gameState.id_Unit++, Unit.class);
@@ -56,10 +60,11 @@ public class Initalize implements EventProcessor{
 		gameState.map_Unit.put(gameState.board[1][2],unit_human);
 		gameState.humanPlayer.map_Unit_human.put(gameState.board[1][2],unit_human);
 		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
-		BasicCommands.setUnitAttack(out,unit_human,5);
+		BasicCommands.setUnitAttack(out,unit_human,2);
 		BasicCommands.setUnitHealth(out,unit_human,20);
 		unit_human.health = 20;
-		unit_human.attack = 5;
+		unit_human.rawHealth = 20;
+		unit_human.attack = 2;
 
 
 		Unit unit_ai = BasicObjectBuilders.loadUnit(StaticConfFiles.aiAvatar, gameState.id_Unit++, Unit.class);
@@ -67,84 +72,28 @@ public class Initalize implements EventProcessor{
 		unit_ai.setPositionByTile(gameState.board[7][2]);
 		BasicCommands.drawUnit(out, unit_ai, gameState.board[7][2]);
 		gameState.map_Unit.put(gameState.board[7][2],unit_ai);
+		gameState.AIPlayer.map_Unit_ai.put(gameState.board[7][2],unit_ai);
 		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
-		BasicCommands.setUnitAttack(out,unit_ai,5);
+		BasicCommands.setUnitAttack(out,unit_ai,2);
 		BasicCommands.setUnitHealth(out,unit_ai,20);
 		unit_ai.health = 20;
-		unit_ai.attack = 5;
-
-		//init deck
-//		int id = 0;
-//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_truestrike, id++, Card.class));
-//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_sundrop_elixir, id++, Card.class));
-//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_comodo_charger, id++, Card.class));
-//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_azure_herald, id++, Card.class));
-//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_azurite_lion, id++, Card.class));
-//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_fire_spitter, id++, Card.class));
-//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_hailstone_golem, id++, Card.class));
-//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_ironcliff_guardian, id++, Card.class));
-//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_pureblade_enforcer, id++, Card.class));
-//		GameState.cards.add(BasicObjectBuilders.loadCard(StaticConfFiles.c_silverguard_knight, id++, Card.class));
-
-		//init unit
-//		GameState.unitStaticConfFiles.add(StaticConfFiles.u_comodo_charger);
-//		GameState.unitStaticConfFiles.add(StaticConfFiles.u_hailstone_golem );
-//		GameState.unitStaticConfFiles.add(StaticConfFiles.u_azure_herald);
-//		GameState.unitStaticConfFiles.add(StaticConfFiles.u_azurite_lion);
-//		GameState.unitStaticConfFiles.add(StaticConfFiles.u_pureblade_enforcer);
-//		GameState.unitStaticConfFiles.add(StaticConfFiles.u_ironcliff_guardian);
-//		GameState.unitStaticConfFiles.add(StaticConfFiles.u_silverguard_knight);
-//		GameState.unitStaticConfFiles.add(StaticConfFiles.u_fire_spitter);
+		unit_ai.rawHealth = 20;
+		unit_ai.attack = 2;
 
 
 		BasicCommands.addPlayer1Notification(out,"It's turn " + gameState.turn,2);
 			try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
 //
 			//set mana
-			gameState.humanPlayer.setMana(gameState.turn);
+			gameState.humanPlayer.setMana(2);
+			gameState.AIPlayer.setMana(2);
 			BasicCommands.setPlayer1Mana(out,gameState.humanPlayer);
+			BasicCommands.setPlayer2Mana(out,gameState.AIPlayer);
 
 		//drew card
-
-//		Random random = new Random();
-//		Card card = GameState.cards.get(random.nextInt(GameState.cards.size()));
-		Card card = gameState.humanPlayer.chooseACard();
-//		BasicCommands.drawCard(out,card,GameState.humanPlayer.index_cardInHand++,0);
-//		GameState.humanPlayer.cardsInPlayerHand.add(card);
+		Card card = gameState.humanPlayer.chooseACard(out);
 		gameState.humanPlayer.updateHandCardsView(out);
 		try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
-
-
-
-
-//		Card hailstone_golem = BasicObjectBuilders.loadCard(StaticConfFiles.c_hailstone_golem, 0, Card.class);
-//		BasicCommands.drawCard(out, hailstone_golem, 1, 0);
-//		BasicCommands.drawCard(out, hailstone_golem, 2, 0);
-
-//		int index_cardInHand = 1;
-//
-//		for (int turn = 1; GameState.humanPlayer.getHealth() > 0 && GameState.AIPlayer.getHealth() > 0 ; turn++) {
-//			BasicCommands.addPlayer1Notification(out,"It's turn " + turn,2);
-//			try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
-//
-//			//set mana
-//			GameState.humanPlayer.setMana(turn);
-//			BasicCommands.setPlayer1Mana(out,GameState.humanPlayer);
-//
-//			//draw card
-//			Random random = new Random();
-//			BasicCommands.drawCard(out,GameState.cards.get(random.nextInt(GameState.cards.size())),index_cardInHand++,0);
-//			try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
-//
-//			//delete card
-////			BasicCommands.deleteCard(out,CardClicked.handPosition);
-//
-//			while(!EndTurnClicked.isOver){
-//				if(EndTurnClicked.isOver) continue;
-//			}
-//			if(turn == 2)break;
-//		}
-
 
 	}
 
