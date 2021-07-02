@@ -23,17 +23,15 @@ import java.util.Random;
  */
 public class EndTurnClicked implements EventProcessor{
 
-	public static boolean isOver = false;
-
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
 
 		BasicCommands.addPlayer1Notification(out,"It's ai",2);
 		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
-		AIPlayer aiPlayer = gameState.AIPlayer;
-		aiPlayer.chooseACard(out);
-		aiPlayer.updateHandCardsView(out);
-		Card card_ai = aiPlayer.cardsInPlayerHand.get(0);
+		//AIPlayer aiPlayer = gameState.AIPlayer;
+		gameState.AIPlayer.drawACard(out);
+		//gameState.AIPlayer.updateHandCardsView(out);
+		Card card_ai = gameState.AIPlayer.cardsInPlayerHand.get(0);
 		if(card_ai.getId() == 20){
 			Tile[] tiles = gameState.humanPlayer.map_Unit_human.keySet().toArray(new Tile[0]);
 			Random random = new Random();
@@ -45,25 +43,24 @@ public class EndTurnClicked implements EventProcessor{
 			Tile tile = tiles[random.nextInt(tiles.length)];
 			card_ai.spellOf03(out,gameState,card_ai,tile);
 		}else{
-			aiPlayer.determineTilesCanSummon(out,gameState,aiPlayer.map_Unit_ai);
+			gameState.AIPlayer.determineTilesCanSummon(out,gameState,gameState.AIPlayer.map_Unit_ai);
 			try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
 			Random random = new Random();
-			Tile tile = aiPlayer.tiles_canSummon.get(random.nextInt(aiPlayer.tiles_canSummon.size()));
-			aiPlayer.summonCardToUnit(out,gameState,card_ai,aiPlayer.ai_cardToUnit.get(card_ai),tile, aiPlayer, 1,1);
+			Tile tile = gameState.AIPlayer.tiles_canSummon.get(random.nextInt(gameState.AIPlayer.tiles_canSummon.size()));
+			gameState.AIPlayer.summonCardToUnit(out,gameState,card_ai,gameState.AIPlayer.ai_cardToUnit.get(card_ai),tile, gameState.AIPlayer, 1,1);
 			try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
-			aiPlayer.deleteTilesCanSummon(out,aiPlayer.tiles_canSummon);
+			gameState.AIPlayer.deleteTilesCanSummon(out,gameState.AIPlayer.tiles_canSummon);
 		}
 
-		for(Card card : aiPlayer.cardsShouldBeRemove){
-			aiPlayer.cardsInPlayerHand.remove(card);
+		for(Card card : gameState.AIPlayer.cardsShouldBeRemove){
+			gameState.AIPlayer.cardsInPlayerHand.remove(card);
 		}
-		aiPlayer.cardsShouldBeRemove.clear();
+		gameState.AIPlayer.cardsShouldBeRemove.clear();
 
 		try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
 
 //		aiPlayer.deleteCardInView(out);
 
-		isOver = true;
 		gameState.turn++;
 		if (gameState.humanPlayer.getHealth() <= 0) {
 			BasicCommands.addPlayer1Notification(out, "Game Over", 2);
@@ -73,9 +70,9 @@ public class EndTurnClicked implements EventProcessor{
 		}
 
 		else{
-			CardClicked.isCardClicked = false;
-			TileClicked.isMoveOrAttackUnit = false;
-			TileClicked.isTileClicked = false;
+			gameState.isCardClicked = false;
+			gameState.isMoveOrAttackUnit = false;
+			gameState.isTileClicked = false;
 			for(Card card : gameState.humanPlayer.cardsShouldBeRemove){
 				gameState.humanPlayer.cardsInPlayerHand.remove(card);
 			}
@@ -86,7 +83,7 @@ public class EndTurnClicked implements EventProcessor{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-//
+
 			//set mana
 			int mana_now = 0;
 			if(gameState.turn <= 9) mana_now = gameState.turn + 1;
@@ -97,14 +94,13 @@ public class EndTurnClicked implements EventProcessor{
 			BasicCommands.setPlayer2Mana(out,gameState.AIPlayer);
 
 			//drew card
-				Card card = gameState.humanPlayer.chooseACard(out);
-				gameState.humanPlayer.updateHandCardsView(out);
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-
+			Card card = gameState.humanPlayer.drawACard(out);
+			gameState.humanPlayer.updateHandCardsView(out);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

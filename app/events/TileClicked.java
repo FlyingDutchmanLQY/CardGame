@@ -27,11 +27,11 @@ import java.util.ArrayList;
  */
 public class TileClicked implements EventProcessor{
 
-	public static int tilex;
-	public static int tiley;
+	public int tilex;
+	public int tiley;
 
-	public static boolean isTileClicked = false;
-	public static boolean isMoveOrAttackUnit = false;
+	//public static boolean isTileClicked = false;
+	//public static boolean isMoveOrAttackUnit = false;
 
 	//标志位，1为第一次点击tile，0为第二次点击
 	public static int index_move = 1;
@@ -51,11 +51,11 @@ public class TileClicked implements EventProcessor{
 
 		tilex = message.get("tilex").asInt();
 		tiley = message.get("tiley").asInt();
-		isTileClicked = true;
+		gameState.isTileClicked = true;
 		tile_Click = gameState.board[tilex][tiley];
 		unit_Click = gameState.map_Unit.get(tile_Click);
 
-		if(CardClicked.isCardClicked) {
+		if(gameState.isCardClicked) {
 			Card card = gameState.humanPlayer.cardsInPlayerHand.get(CardClicked.handPosition -1);
 			if(card.getId() == 0){
 				card.spellOf01(out,gameState,card,tile_Click, gameState.humanPlayer);
@@ -71,11 +71,11 @@ public class TileClicked implements EventProcessor{
 				unit.setPositionByTile(tile_Click);
 				gameState.humanPlayer.summonCardToUnit(out, gameState,card, unit,tile_Click, gameState.humanPlayer, CardClicked.handPosition,0);
 			}
-			CardClicked.isCardClicked = false;
+			gameState.isCardClicked = false;
 			gameState.humanPlayer.deleteTilesCanSummon(out,gameState.humanPlayer.tiles_canSummon);
 		}
 		else {
-			if (isMoveOrAttackUnit) {
+			if (gameState.isMoveOrAttackUnit) {
 				//move unit
 				unit_Move.rangeOfMove(out,gameState,start_move_tile,0);
 				if (unit_Click == null) {
@@ -87,12 +87,12 @@ public class TileClicked implements EventProcessor{
 					unit_Move.attack(out,gameState,start_move_tile,tile_Click);
 				}
 				index_move = 0;
-				isMoveOrAttackUnit = false;
+				gameState.isMoveOrAttackUnit = false;
 			}
 
 			//TODO 显示move的范围
-			if (unit_Click != null && isMoveOrAttackUnit == false && index_move == 1) {
-				isMoveOrAttackUnit = true;
+			if (unit_Click != null && gameState.isMoveOrAttackUnit == false && index_move == 1) {
+				gameState.isMoveOrAttackUnit = true;
 				start_move_tile = tile_Click;
 				unit_Move = gameState.map_Unit.get(start_move_tile);
 				BasicCommands.addPlayer1Notification(out,"Choose Tile Or Unit",3);

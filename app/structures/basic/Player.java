@@ -50,13 +50,13 @@ public class Player {
 		this.mana = mana;
 	}
 
-	public Card chooseACard(ActorRef out){
+	public Card drawACard(ActorRef out){
 		if(cardsInPlayerHand.size() < 6){
 			if(deck.size() > 0){
 				Card card = this.deck.get(0);
 				this.cardsInPlayerHand.add(card);
 				this.deck.remove(0);
-				shuffleDeck();
+				//shuffleDeck();
 				return card;
 			}else{
 				BasicCommands.addPlayer1Notification(out,"No Card In Deck",2);
@@ -64,6 +64,7 @@ public class Player {
 			}
 		}
 		else{
+			BasicCommands.addPlayer1Notification(out,"Hands Full",2);
 			return null;
 		}
 	}

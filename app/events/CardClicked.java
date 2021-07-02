@@ -21,13 +21,13 @@ import structures.GameState;
 public class CardClicked implements EventProcessor{
 
 	public static int handPosition = 0;
-	public static boolean isCardClicked = false;
+	//public static boolean isCardClicked = false;
 
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
 		
 		handPosition = message.get("position").asInt();
-		isCardClicked = true;
+		gameState.isCardClicked = true;
 		BasicCommands.addPlayer1Notification(out,"Choose A Tile", 3);
 		BasicCommands.drawCard(out,gameState.humanPlayer.cardsInPlayerHand.get(handPosition - 1),handPosition,1);
 

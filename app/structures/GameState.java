@@ -29,4 +29,7 @@ public class GameState {
    public HumanPlayer humanPlayer = new HumanPlayer(20,0);
    public AIPlayer AIPlayer = new AIPlayer(20,0) ;
 
+   public boolean isCardClicked = false;
+   public boolean isTileClicked = false;
+   public boolean isMoveOrAttackUnit = false;
 }

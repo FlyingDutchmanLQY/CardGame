@@ -25,20 +25,13 @@ public class Initalize implements EventProcessor{
 
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
-		
+
 		// this executes the command demo, comment out this when implementing your solution
 //		CommandDemo.executeDemo(out);
 
-
-		CardClicked.isCardClicked = false;
-		TileClicked.isMoveOrAttackUnit = false;
-		TileClicked.isTileClicked = false;
 		TileClicked.tiles_canMove.clear();
-		gameState.cards.clear();
-		gameState.map_Unit.clear();
-		gameState.unitList.clear();
 
-		//画棋盘
+		//draw the board
 		for(int i=0;i<9;i++){
 			for(int j=0;j<5;j++){
 				gameState.board[i][j] = BasicObjectBuilders.loadTile(i, j);
@@ -46,26 +39,24 @@ public class Initalize implements EventProcessor{
 			}
 		}
 
-		//属性初始化
+		//initialize players
 		gameState.humanPlayer.initDeck();
 		gameState.AIPlayer.initDeck();
 		BasicCommands.setPlayer1Health(out, gameState.humanPlayer);
 		BasicCommands.setPlayer2Health(out, gameState.AIPlayer);
 
-		//画单位
+		//draw avatars
 		Unit unit_human = BasicObjectBuilders.loadUnit(StaticConfFiles.humanAvatar, gameState.id_Unit++, Unit.class);
 		gameState.unitList.add(unit_human);
 		unit_human.setPositionByTile(gameState.board[1][2]);
 		BasicCommands.drawUnit(out, unit_human, gameState.board[1][2]);
 		gameState.map_Unit.put(gameState.board[1][2],unit_human);
 		gameState.humanPlayer.map_Unit_human.put(gameState.board[1][2],unit_human);
-		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.setUnitAttack(out,unit_human,2);
 		BasicCommands.setUnitHealth(out,unit_human,20);
 		unit_human.health = 20;
 		unit_human.rawHealth = 20;
 		unit_human.attack = 2;
-
 
 		Unit unit_ai = BasicObjectBuilders.loadUnit(StaticConfFiles.aiAvatar, gameState.id_Unit++, Unit.class);
 		gameState.unitList.add(unit_ai);
@@ -73,25 +64,22 @@ public class Initalize implements EventProcessor{
 		BasicCommands.drawUnit(out, unit_ai, gameState.board[7][2]);
 		gameState.map_Unit.put(gameState.board[7][2],unit_ai);
 		gameState.AIPlayer.map_Unit_ai.put(gameState.board[7][2],unit_ai);
-		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 		BasicCommands.setUnitAttack(out,unit_ai,2);
 		BasicCommands.setUnitHealth(out,unit_ai,20);
 		unit_ai.health = 20;
 		unit_ai.rawHealth = 20;
 		unit_ai.attack = 2;
 
-
 		BasicCommands.addPlayer1Notification(out,"It's turn " + gameState.turn,2);
-			try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
-//
-			//set mana
-			gameState.humanPlayer.setMana(2);
-			gameState.AIPlayer.setMana(2);
-			BasicCommands.setPlayer1Mana(out,gameState.humanPlayer);
-			BasicCommands.setPlayer2Mana(out,gameState.AIPlayer);
+
+		//set mana
+		gameState.humanPlayer.setMana(2);
+		gameState.AIPlayer.setMana(2);
+		BasicCommands.setPlayer1Mana(out,gameState.humanPlayer);
+		BasicCommands.setPlayer2Mana(out,gameState.AIPlayer);
 
 		//drew card
-		Card card = gameState.humanPlayer.chooseACard(out);
+		Card card = gameState.humanPlayer.drawACard(out);
 		gameState.humanPlayer.updateHandCardsView(out);
 		try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
 
