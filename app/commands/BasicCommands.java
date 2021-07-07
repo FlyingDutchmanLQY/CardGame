@@ -32,9 +32,9 @@ public class BasicCommands {
 	 * @param tile
 	 * @param mode
 	 */
-	private static void delay(){
+	private static void delay(int time){
 		try {
-			Thread.sleep(30);
+			Thread.sleep(time);
 		}
 		catch (InterruptedException e) {
 			e.printStackTrace();
@@ -42,7 +42,7 @@ public class BasicCommands {
 	}
 	@SuppressWarnings({"deprecation"})
 	public static void drawTile(ActorRef out, Tile tile, int mode) {
-		delay();
+		delay(20);
 		try {
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "drawTile");
@@ -64,7 +64,7 @@ public class BasicCommands {
 	 */
 	@SuppressWarnings({"deprecation"})
 	public static void drawUnit(ActorRef out, Unit unit, Tile tile) {
-		delay();
+		delay(30);
 		try {
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "drawUnit");
@@ -85,7 +85,7 @@ public class BasicCommands {
 	 */
 	@SuppressWarnings({"deprecation"})
 	public static void setUnitAttack(ActorRef out, Unit unit, int attack) {
-		delay();
+		delay(30);
 		try {
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "setUnitAttack");
@@ -106,7 +106,7 @@ public class BasicCommands {
 	 */
 	@SuppressWarnings({"deprecation"})
 	public static void setUnitHealth(ActorRef out, Unit unit, int health) {
-		delay();
+		delay(30);
 		try {
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "setUnitHealth");
@@ -127,7 +127,7 @@ public class BasicCommands {
 	 */
 	@SuppressWarnings({"deprecation"})
 	public static void moveUnitToTile(ActorRef out, Unit unit, Tile tile) {
-		delay();
+		delay(30);
 		try {
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "moveUnitToTile");
@@ -149,7 +149,7 @@ public class BasicCommands {
 	 */
 	@SuppressWarnings({"deprecation"})
 	public static void playUnitAnimation(ActorRef out, Unit unit, UnitAnimationType animationToPlay) {
-		delay();
+		delay(10);
 		try {
 			
 			unit.setAnimation(animationToPlay);
@@ -172,7 +172,7 @@ public class BasicCommands {
 	 */
 	@SuppressWarnings({"deprecation"})
 	public static void deleteUnit(ActorRef out, Unit unit) {
-		delay();
+		delay(30);
 		try {
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "deleteUnit");
@@ -192,7 +192,7 @@ public class BasicCommands {
 	 */
 	@SuppressWarnings({"deprecation"})
 	public static void setPlayer1Health(ActorRef out, Player player) {
-		delay();
+		delay(30);
 		try {
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "setPlayer1Health");
@@ -212,7 +212,7 @@ public class BasicCommands {
 	 */
 	@SuppressWarnings({"deprecation"})
 	public static void setPlayer2Health(ActorRef out, Player player) {
-		delay();
+		delay(30);
 		try {
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "setPlayer2Health");
@@ -232,7 +232,7 @@ public class BasicCommands {
 	 */
 	@SuppressWarnings({"deprecation"})
 	public static void setPlayer1Mana(ActorRef out, Player player) {
-		delay();
+		delay(30);
 		try {
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "setPlayer1Mana");
@@ -252,7 +252,7 @@ public class BasicCommands {
 	 */
 	@SuppressWarnings({"deprecation"})
 	public static void setPlayer2Mana(ActorRef out, Player player) {
-		delay();
+		delay(30);
 		try {
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "setPlayer2Mana");
@@ -274,7 +274,7 @@ public class BasicCommands {
 	 */
 	@SuppressWarnings({"deprecation"})
 	public static void drawCard(ActorRef out, Card card, int position, int mode) {
-		delay();
+		delay(20);
 		try {
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "drawCard");
@@ -293,7 +293,7 @@ public class BasicCommands {
 	 * @param position
 	 */
 	public static void deleteCard(ActorRef out, int position) {
-		delay();
+		delay(20);
 		try {
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "deleteCard");
@@ -313,7 +313,7 @@ public class BasicCommands {
 	 */
 	@SuppressWarnings({"deprecation"})
 	public static void playEffectAnimation(ActorRef out, EffectAnimation effect, Tile tile) {
-		delay();
+		delay(30);
 		try {
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "playEffectAnimation");
@@ -334,7 +334,7 @@ public class BasicCommands {
 	 * @param displayTimeSeconds
 	 */
 	public static void addPlayer1Notification(ActorRef out, String text, int displayTimeSeconds) {
-		delay();
+		delay(20);
 		try {
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "addPlayer1Notification");
@@ -354,7 +354,7 @@ public class BasicCommands {
 	 */
 	@SuppressWarnings({"deprecation"})
 	public static void playProjectileAnimation(ActorRef out, EffectAnimation effect, int mode, Tile startTile, Tile targetTile) {
-		delay();
+		delay(20);
 		try {
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "drawProjectile");

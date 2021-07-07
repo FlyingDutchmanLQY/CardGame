@@ -26,38 +26,8 @@ public class EndTurnClicked implements EventProcessor{
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
 
-		BasicCommands.addPlayer1Notification(out,"It's ai",2);
-		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
-		//AIPlayer aiPlayer = gameState.AIPlayer;
-		gameState.AIPlayer.drawACard(out);
-		//gameState.AIPlayer.updateHandCardsView(out);
-		Card card_ai = gameState.AIPlayer.cardsInPlayerHand.get(0);
-		if(card_ai.getId() == 20){
-			Tile[] tiles = gameState.humanPlayer.map_Unit_human.keySet().toArray(new Tile[0]);
-			Random random = new Random();
-			Tile tile = tiles[random.nextInt(tiles.length)];
-			card_ai.spellOf03(out,gameState,card_ai,tile);
-		}else if(card_ai.getId() == 21){
-			Tile[] tiles = gameState.humanPlayer.map_Unit_human.keySet().toArray(new Tile[0]);
-			Random random = new Random();
-			Tile tile = tiles[random.nextInt(tiles.length)];
-			card_ai.spellOf03(out,gameState,card_ai,tile);
-		}else{
-			gameState.AIPlayer.determineTilesCanSummon(out,gameState,gameState.AIPlayer.map_Unit_ai);
-			try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
-			Random random = new Random();
-			Tile tile = gameState.AIPlayer.tiles_canSummon.get(random.nextInt(gameState.AIPlayer.tiles_canSummon.size()));
-			gameState.AIPlayer.summonCardToUnit(out,gameState,card_ai,gameState.AIPlayer.ai_cardToUnit.get(card_ai),tile, gameState.AIPlayer, 1,1);
-			try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
-			gameState.AIPlayer.deleteTilesCanSummon(out,gameState.AIPlayer.tiles_canSummon);
-		}
-
-		for(Card card : gameState.AIPlayer.cardsShouldBeRemove){
-			gameState.AIPlayer.cardsInPlayerHand.remove(card);
-		}
-		gameState.AIPlayer.cardsShouldBeRemove.clear();
-
-		try {Thread.sleep(2000);} catch (InterruptedException e) {e.printStackTrace();}
+		DoEnemyTurn doEnemyTurn = new DoEnemyTurn();
+		doEnemyTurn.doAITurn(out,gameState);
 
 //		aiPlayer.deleteCardInView(out);
 
@@ -70,8 +40,9 @@ public class EndTurnClicked implements EventProcessor{
 		}
 
 		else{
+			gameState.resetEventSignals();
 			gameState.isCardClicked = false;
-			gameState.isMoveOrAttackUnit = false;
+			//gameState.isMoveOrAttackUnit = false;
 			gameState.isTileClicked = false;
 			for(Card card : gameState.humanPlayer.cardsShouldBeRemove){
 				gameState.humanPlayer.cardsInPlayerHand.remove(card);
@@ -79,7 +50,7 @@ public class EndTurnClicked implements EventProcessor{
 			gameState.humanPlayer.cardsShouldBeRemove.clear();
 			BasicCommands.addPlayer1Notification(out, "It's turn " + gameState.turn, 2);
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -97,7 +68,7 @@ public class EndTurnClicked implements EventProcessor{
 			Card card = gameState.humanPlayer.drawACard(out);
 			gameState.humanPlayer.updateHandCardsView(out);
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

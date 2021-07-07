@@ -55,53 +55,14 @@ public class TileClicked implements EventProcessor{
 		tile_Click = gameState.board[tilex][tiley];
 		unit_Click = gameState.map_Unit.get(tile_Click);
 
-		if(gameState.isCardClicked) {
-			Card card = gameState.humanPlayer.cardsInPlayerHand.get(CardClicked.handPosition -1);
-			if(card.getId() == 0){
-				card.spellOf01(out,gameState,card,tile_Click, gameState.humanPlayer);
-			}else if(card.getId() == 10){
-				card.spellOf01(out,gameState,card,tile_Click, gameState.humanPlayer);
-			}else if(card.getId() == 1){
-				card.spellOf02(out,gameState,card,tile_Click, gameState.humanPlayer);
-			}else if(card.getId() == 11){
-				card.spellOf02(out,gameState,card,tile_Click, gameState.humanPlayer);
-			}
-			else{
-				Unit unit = gameState.humanPlayer.human_cardToUnit.get(card);
-				unit.setPositionByTile(tile_Click);
-				gameState.humanPlayer.summonCardToUnit(out, gameState,card, unit,tile_Click, gameState.humanPlayer, CardClicked.handPosition,0);
-			}
-			gameState.isCardClicked = false;
-			gameState.humanPlayer.deleteTilesCanSummon(out,gameState.humanPlayer.tiles_canSummon);
+		if(unit_Click == null) {
+			EmptyTileClicked emptyTileClicked = new EmptyTileClicked();   	//Meaning an empty tile is clicked
+			emptyTileClicked.processEvent(out, gameState, message);			//Manually trigger
 		}
-		else {
-			if (gameState.isMoveOrAttackUnit) {
-				//move unit
-				unit_Move.rangeOfMove(out,gameState,start_move_tile,0);
-				if (unit_Click == null) {
-					unit_Move.moveUnit(out,gameState,unit_Move,start_move_tile,tile_Click);
-					tiles_canMove.clear();
-				}
-				//attack
-				else if (unit_Click != null) {
-					unit_Move.attack(out,gameState,start_move_tile,tile_Click);
-				}
-				index_move = 0;
-				gameState.isMoveOrAttackUnit = false;
-			}
-
-			//TODO 显示move的范围
-			if (unit_Click != null && gameState.isMoveOrAttackUnit == false && index_move == 1) {
-				gameState.isMoveOrAttackUnit = true;
-				start_move_tile = tile_Click;
-				unit_Move = gameState.map_Unit.get(start_move_tile);
-				BasicCommands.addPlayer1Notification(out,"Choose Tile Or Unit",3);
-				unit_Move.rangeOfMove(out,gameState,start_move_tile,2);
-			}
-
-			index_move = 1;
+		else{   //unit_Click != null
+			UnitClicked unitClicked = new UnitClicked();					// Meaning a unit is clicked
+			unitClicked.processEvent(out, gameState, message);				//Manually trigger
 		}
-
 	}
 
 }

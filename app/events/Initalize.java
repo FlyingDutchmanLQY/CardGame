@@ -3,6 +3,7 @@ package events;
 import akka.actor.ActorRef;
 import com.fasterxml.jackson.databind.JsonNode;
 import commands.BasicCommands;
+import demo.CommandDemo;
 import structures.GameState;
 import structures.basic.Card;
 import structures.basic.Unit;
@@ -27,7 +28,7 @@ public class Initalize implements EventProcessor{
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
 
 		// this executes the command demo, comment out this when implementing your solution
-//		CommandDemo.executeDemo(out);
+		//CommandDemo.executeDemo(out);
 
 		TileClicked.tiles_canMove.clear();
 
@@ -46,7 +47,7 @@ public class Initalize implements EventProcessor{
 		BasicCommands.setPlayer2Health(out, gameState.AIPlayer);
 
 		//draw avatars
-		Unit unit_human = BasicObjectBuilders.loadUnit(StaticConfFiles.humanAvatar, gameState.id_Unit++, Unit.class);
+		Unit unit_human = BasicObjectBuilders.loadUnit(StaticConfFiles.humanAvatar, 20, Unit.class);
 		gameState.unitList.add(unit_human);
 		unit_human.setPositionByTile(gameState.board[1][2]);
 		BasicCommands.drawUnit(out, unit_human, gameState.board[1][2]);
@@ -58,7 +59,7 @@ public class Initalize implements EventProcessor{
 		unit_human.rawHealth = 20;
 		unit_human.attack = 2;
 
-		Unit unit_ai = BasicObjectBuilders.loadUnit(StaticConfFiles.aiAvatar, gameState.id_Unit++, Unit.class);
+		Unit unit_ai = BasicObjectBuilders.loadUnit(StaticConfFiles.aiAvatar, 21, Unit.class);
 		gameState.unitList.add(unit_ai);
 		unit_ai.setPositionByTile(gameState.board[7][2]);
 		BasicCommands.drawUnit(out, unit_ai, gameState.board[7][2]);

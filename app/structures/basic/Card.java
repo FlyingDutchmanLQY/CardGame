@@ -71,22 +71,23 @@ public class Card {
 		this.bigCard = bigCard;
 	}
 
-	public void spellOf01(ActorRef out, GameState gameState, Card card, Tile tile_Click,Player player){
+	public void spellOf01(ActorRef out, GameState gameState, Unit targetUnit, Player player, int handPosition){
+		Tile tile_Click = targetUnit.getCurrentTile(gameState);
 		if(unit_Click == null){
 			BasicCommands.addPlayer1Notification(out,"Does not meet the rules",2);
 		}else{
 			BasicCommands.addPlayer1Notification(out,"Spell 0",2);
-			player.summonCard(out,gameState,card,player,CardClicked.handPosition);
+			player.summonCard(out, gameState, this, player,handPosition);
 			BasicCommands.playEffectAnimation(out, BasicObjectBuilders.loadEffect(StaticConfFiles.f1_inmolation),tile_Click);
 			unit_Click.changeHealth(out,gameState,tile_Click,2);
 		}
 	}
 
-	public void spellOf02(ActorRef out, GameState gameState, Card card, Tile tile_Click,Player player){
+	public void spellOf02(ActorRef out, GameState gameState, Card card, Tile tile_Click,Player player, int handPosition){
 		if(unit_Click == null){
 			BasicCommands.addPlayer1Notification(out,"Does not meet the rules",2);
 		}else{
-			gameState.humanPlayer.summonCard(out,gameState,card, player,CardClicked.handPosition);
+			gameState.humanPlayer.summonCard(out,gameState,card, player,handPosition);
 			BasicCommands.addPlayer1Notification(out,"Spell 1",2);
 			BasicCommands.playEffectAnimation(out,BasicObjectBuilders.loadEffect(StaticConfFiles.f1_buff),tile_Click);
 			if(unit_Click.health + 5 <= unit_Click.rawHealth){

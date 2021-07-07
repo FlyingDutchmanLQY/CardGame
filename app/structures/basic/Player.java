@@ -56,7 +56,8 @@ public class Player {
 				Card card = this.deck.get(0);
 				this.cardsInPlayerHand.add(card);
 				this.deck.remove(0);
-				//shuffleDeck();
+				System.out.println(this.deck.get(0).getCardname());
+				shuffleDeck();
 				return card;
 			}else{
 				BasicCommands.addPlayer1Notification(out,"No Card In Deck",2);
@@ -132,7 +133,7 @@ public class Player {
 		} else{
 			player.setMana(mana);
 			if(player instanceof HumanPlayer)BasicCommands.setPlayer1Mana(out,gameState.humanPlayer);
-			if(player instanceof AIPlayer)BasicCommands.setPlayer2Mana(out,gameState.humanPlayer);
+			if(player instanceof AIPlayer)BasicCommands.setPlayer2Mana(out,gameState.AIPlayer);
 			cardsShouldBeRemove.add(player.cardsInPlayerHand.get(position - 1));
 			try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
 			BasicCommands.deleteCard(out,position);

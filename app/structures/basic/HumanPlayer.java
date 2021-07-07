@@ -6,7 +6,18 @@ import utils.StaticConfFiles;
 import java.util.HashMap;
 
 public class HumanPlayer extends Player{
-
+/*  id      name
+*   0     c_truestrike
+*   1     c_sundrop_elixir
+*   2     c_comodo_charger
+*   3     c_hailstone_golem
+*   4     c_pureblade_enforcer
+*   5     c_azure_herald
+*   6     c_silverguard_knight
+*   7     c_azurite_lion
+*   8     c_fire_spitter
+*   9     c_ironcliff_guardian
+* */
 
     public HashMap<Card,Unit> human_cardToUnit = new HashMap<>();
     public HashMap<Tile,Unit> map_Unit_human = new HashMap<>();
@@ -163,7 +174,6 @@ public class HumanPlayer extends Player{
         unit.rawHealth = unit.health;
         this.deck.add(cardTemp);
         human_cardToUnit.put(cardTemp,unit);
-
 
         shuffleDeck();
     }

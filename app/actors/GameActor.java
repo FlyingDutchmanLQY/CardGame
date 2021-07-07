@@ -96,7 +96,6 @@ public class GameActor extends AbstractActor {
 	 */
 	@SuppressWarnings({"deprecation"})
 	public void processMessage(String messageType, JsonNode message) throws Exception{
-
 		EventProcessor processor = eventProcessors.get(messageType);
 		if (processor==null) {
 			// Unknown event type received
