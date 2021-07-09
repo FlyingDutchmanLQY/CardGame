@@ -53,11 +53,11 @@ public class Initalize implements EventProcessor{
 		BasicCommands.drawUnit(out, humanAvatar, gameState.board[1][2]);
 		gameState.unitPositionMap.put(gameState.board[1][2],humanAvatar);
 		gameState.humanPlayer.map_Unit_human.put(gameState.board[1][2],humanAvatar);
-		BasicCommands.setUnitAttack(out,humanAvatar,2);
-		BasicCommands.setUnitHealth(out,humanAvatar,20);
 		humanAvatar.health = 20;
 		humanAvatar.rawHealth = 20;
 		humanAvatar.attack = 2;
+		BasicCommands.setUnitAttack(out,humanAvatar,2);
+		BasicCommands.setUnitHealth(out,humanAvatar,20);
 
 		Unit AIAvatar = BasicObjectBuilders.loadUnit(StaticConfFiles.aiAvatar, 21, Unit.class);
 		gameState.unitList.add(AIAvatar);
@@ -66,11 +66,12 @@ public class Initalize implements EventProcessor{
 		BasicCommands.drawUnit(out, AIAvatar, gameState.board[7][2]);
 		gameState.unitPositionMap.put(gameState.board[7][2],AIAvatar);
 		gameState.AIPlayer.map_Unit_ai.put(gameState.board[7][2],AIAvatar);
-		BasicCommands.setUnitAttack(out,AIAvatar,2);
-		BasicCommands.setUnitHealth(out,AIAvatar,20);
 		AIAvatar.health = 20;
 		AIAvatar.rawHealth = 20;
 		AIAvatar.attack = 2;
+		BasicCommands.setUnitAttack(out,AIAvatar,2);
+		BasicCommands.setUnitHealth(out,AIAvatar,20);
+
 
 		BasicCommands.addPlayer1Notification(out,"It's turn " + gameState.turn,2);
 
