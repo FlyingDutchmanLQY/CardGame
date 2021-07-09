@@ -23,9 +23,7 @@ public class Heartbeat implements EventProcessor{
 
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
-		/*for (Unit u :gameState.unitList	) {
-			System.out.println(u.getId());
-		}*/
+		//System.out.println(gameState.eventRecorder);
 
 	}
 

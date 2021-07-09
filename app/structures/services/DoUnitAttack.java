@@ -11,7 +11,7 @@ public class DoUnitAttack {
         attacker.displayRangeOfMovement(out,gameState,attacker.getCurrentTile(gameState),0);
         attacker.attack(out,gameState,targetUnit);
 
-        DoCheckWinner doCheckWinner = new DoCheckWinner();
-        doCheckWinner.checkWinner(out, gameState);
+        //DoCheckWinner doCheckWinner = new DoCheckWinner();
+        //doCheckWinner.checkWinner(out, gameState);
     }
 }

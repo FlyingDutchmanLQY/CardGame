@@ -85,7 +85,7 @@ public class BasicCommands {
 	 */
 	@SuppressWarnings({"deprecation"})
 	public static void setUnitAttack(ActorRef out, Unit unit, int attack) {
-		delay(30);
+		delay(40);
 		try {
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "setUnitAttack");
@@ -106,7 +106,7 @@ public class BasicCommands {
 	 */
 	@SuppressWarnings({"deprecation"})
 	public static void setUnitHealth(ActorRef out, Unit unit, int health) {
-		delay(30);
+		delay(40);
 		try {
 			ObjectNode returnMessage = Json.newObject();
 			returnMessage.put("messagetype", "setUnitHealth");

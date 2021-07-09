@@ -1,10 +1,25 @@
 package structures.basic;
 
+import commands.BasicCommands;
+import structures.GameState;
+import structures.services.DoSpellCast;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
-
+import akka.actor.ActorRef;
 import java.util.HashMap;
-
+import java.util.Random;
+/*
+*   22  c_staff_of_ykir
+*   23  c_entropic_decay
+*   24  c_planar_scout
+*   25  c_rock_pulveriser
+*   26  c_pyromancer
+*   27  c_bloodshard_golem
+*   28  c_blaze_hound
+*   29  c_windshrike
+*   30  c_hailstone_golem
+*   31  c_serpenti
+* */
 public class AIPlayer extends Player{
 
     public HashMap<Card,Unit> ai_cardToUnit = new HashMap<>();
@@ -99,36 +114,47 @@ public class AIPlayer extends Player{
 
     public void AI(ActorRef out, GameState gameState){
         BasicCommands.addPlayer1Notification(out,"It's ai",2);
-		try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(300);} catch (InterruptedException e) {e.printStackTrace();}
 		//AIPlayer aiPlayer = gameState.AIPlayer;
 		gameState.AIPlayer.drawACard(out);
 		//gameState.AIPlayer.updateHandCardsView(out);
-		Card card_ai = gameState.AIPlayer.cardsInPlayerHand.get(0);
-		if(card_ai.getId() == 20){
-			Tile[] tiles = gameState.humanPlayer.map_Unit_human.keySet().toArray(new Tile[0]);
-			Random random = new Random();
-			Tile tile = tiles[random.nextInt(tiles.length)];
-			card_ai.spellOf03(out,gameState,card_ai,tile);
-		}else if(card_ai.getId() == 21){
-			Tile[] tiles = gameState.humanPlayer.map_Unit_human.keySet().toArray(new Tile[0]);
-			Random random = new Random();
-			Tile tile = tiles[random.nextInt(tiles.length)];
-			card_ai.spellOf03(out,gameState,card_ai,tile);
-		}else{
-			gameState.AIPlayer.determineTilesCanSummon(out,gameState,gameState.AIPlayer.map_Unit_ai);
-			try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
-			Random random = new Random();
-			Tile tile = gameState.AIPlayer.tiles_canSummon.get(random.nextInt(gameState.AIPlayer.tiles_canSummon.size()));
-			gameState.AIPlayer.summonCardToUnit(out,gameState,card_ai,gameState.AIPlayer.ai_cardToUnit.get(card_ai),tile, gameState.AIPlayer, 1,1);
-			try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
-			gameState.AIPlayer.deleteTilesCanSummon(out,gameState.AIPlayer.tiles_canSummon);
-		}
+		Card card_ai = this.chooseAValidHandCard();
+		if(card_ai != null){
+            if(card_ai.getId() == 22 ){
+                DoSpellCast doSpellCast = new DoSpellCast();
+                doSpellCast.castSpell(out, gameState, card_ai, null, this);
+            }else if(card_ai.getId() == 23){
+                Unit targetUnit = null;
+                DoSpellCast doSpellCast = new DoSpellCast();
+                doSpellCast.castSpell(out, gameState, card_ai, null, this);
+            }else{
+                gameState.AIPlayer.determineTilesCanSummon(out,gameState,gameState.AIPlayer.map_Unit_ai);
+                try {Thread.sleep(300);} catch (InterruptedException e) {e.printStackTrace();}
+                Random random = new Random();
+                Tile tile = gameState.AIPlayer.tiles_canSummon.get(random.nextInt(gameState.AIPlayer.tiles_canSummon.size()));
+                gameState.AIPlayer.summonCardToUnit(out, gameState, card_ai, gameState.AIPlayer.ai_cardToUnit.get(card_ai), tile);
+                try {Thread.sleep(300);} catch (InterruptedException e) {e.printStackTrace();}
+                gameState.AIPlayer.deleteTilesCanSummon(out);
+            }
+        }
+
 
 		for(Card card : gameState.AIPlayer.cardsShouldBeRemove){
 			gameState.AIPlayer.cardsInPlayerHand.remove(card);
 		}
 		gameState.AIPlayer.cardsShouldBeRemove.clear();
 
-		try {Thread.sleep(500);} catch (InterruptedException e) {e.printStackTrace();}
+		try {Thread.sleep(300);} catch (InterruptedException e) {e.printStackTrace();}
+    }
+
+    public Card chooseAValidHandCard(){
+        Card card = null;
+        for (Card c : this.cardsInPlayerHand) {
+            if(c.getManacost() <= this.mana){
+                card = c;
+                break;
+            }
+        }
+        return card;
     }
 }

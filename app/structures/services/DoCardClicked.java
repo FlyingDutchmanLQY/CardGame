@@ -14,26 +14,24 @@ public class DoCardClicked {
         int mana = gameState.humanPlayer.getMana() - card.getManacost();
         if(mana < 0){
             BasicCommands.addPlayer1Notification(out,"not enough mana",2);
+            gameState.resetEventSignals();
         }
         else{                   //enough mana
             BasicCommands.addPlayer1Notification(out,"Choose A Tile", 3);
             BasicCommands.drawCard(out, card, handPosition,1);
 
             int id = card.getId();
-            if(id == 0 || id == 10){
+            if(id == 1 || id == 11){
                 BasicCommands.addPlayer1Notification(out,"Select Enemy Unit",2);
                 gameState.isSpellCard = true;       //Spell Card detection
-            }else if(id == 1 || id == 11){
+            }else if(id == 2 || id == 12){
                 BasicCommands.addPlayer1Notification(out,"Select Unit",2);
                 gameState.isSpellCard = true;       //Spell Card detection
-            }else if(id == 9){
-                BasicCommands.addPlayer1Notification(out,"Summon Anywhere",2);
-            }else if(id == 9){
-                BasicCommands.addPlayer1Notification(out,"Summon Anywhere",2);
+            }else if(id == 10 || id == 20){
+                //BasicCommands.addPlayer1Notification(out,"Summon Anywhere",2);
             }else {
-                gameState.humanPlayer.determineTilesCanSummon(out,gameState,gameState.humanPlayer.map_Unit_human);
+                gameState.humanPlayer.determineTilesCanSummon(out,gameState);
             }
         }
-
     }
 }

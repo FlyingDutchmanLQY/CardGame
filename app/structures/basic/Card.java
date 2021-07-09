@@ -3,12 +3,11 @@ package structures.basic;
 
 import akka.actor.ActorRef;
 import commands.BasicCommands;
-import events.CardClicked;
 import structures.GameState;
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
 
-import static events.TileClicked.unit_Click;
+//import static events.TileClicked.unit_Click;
 
 /**
  * This is the base representation of a Card which is rendered in the player's hand.
@@ -71,43 +70,56 @@ public class Card {
 		this.bigCard = bigCard;
 	}
 
-	public void spellOf01(ActorRef out, GameState gameState, Unit targetUnit, Player player, int handPosition){
-		Tile tile_Click = targetUnit.getCurrentTile(gameState);
-		if(unit_Click == null){
-			BasicCommands.addPlayer1Notification(out,"Does not meet the rules",2);
+	//Name Truestrike
+	//Mana Cost 1
+	//Abilities • Deal 2 damage to an enemy unit
+	public void spellOf01(ActorRef out, GameState gameState, Unit targetUnit){
+		Tile tile = targetUnit.getCurrentTile(gameState);
+		if(targetUnit.getId() <= 20){
+			BasicCommands.addPlayer1Notification(out,"Cannot Choose Ally",2);
 		}else{
-			BasicCommands.addPlayer1Notification(out,"Spell 0",2);
-			player.summonCard(out, gameState, this, player,handPosition);
-			BasicCommands.playEffectAnimation(out, BasicObjectBuilders.loadEffect(StaticConfFiles.f1_inmolation),tile_Click);
-			unit_Click.changeHealth(out,gameState,tile_Click,2);
+			BasicCommands.addPlayer1Notification(out,"Truestrike",2);
+			BasicCommands.playEffectAnimation(out, BasicObjectBuilders.loadEffect(StaticConfFiles.f1_inmolation),tile);
+			targetUnit.changeHealth(out, gameState, targetUnit,2);
 		}
 	}
 
-	public void spellOf02(ActorRef out, GameState gameState, Card card, Tile tile_Click,Player player, int handPosition){
-		if(unit_Click == null){
-			BasicCommands.addPlayer1Notification(out,"Does not meet the rules",2);
+	//Name Sundrop Elixir
+	//Mana Cost 1
+	//Abilities • Add +5 health to a Unit. This cannot take a unit over its starting health value.
+	public void spellOf02(ActorRef out, GameState gameState, Unit targetUnit){
+		Tile tile = targetUnit.getCurrentTile(gameState);
+		BasicCommands.addPlayer1Notification(out, "Sundrop Elixir",2);
+		BasicCommands.playEffectAnimation(out, BasicObjectBuilders.loadEffect(StaticConfFiles.f1_buff), tile);
+		if(targetUnit.health + 5 <= targetUnit.rawHealth){
+			targetUnit.changeHealth(out, gameState, targetUnit, -5);
 		}else{
-			gameState.humanPlayer.summonCard(out,gameState,card, player,handPosition);
-			BasicCommands.addPlayer1Notification(out,"Spell 1",2);
-			BasicCommands.playEffectAnimation(out,BasicObjectBuilders.loadEffect(StaticConfFiles.f1_buff),tile_Click);
-			if(unit_Click.health + 5 <= unit_Click.rawHealth){
-				unit_Click.changeHealth(out,gameState,tile_Click,-5);
-			}else{
-				unit_Click.health = unit_Click.rawHealth;
-				BasicCommands.setUnitHealth(out,unit_Click,unit_Click.health);
-				unit_Click.determineUnitStatue(out,gameState,tile_Click);
-			}
+			targetUnit.health = targetUnit.rawHealth;
+			targetUnit.determineUnitStatus(out, gameState);
 		}
+		BasicCommands.setUnitHealth(out, targetUnit, targetUnit.health);
+
 	}
 
-	public void spellOf03(ActorRef out, GameState gameState, Card card, Tile tile_Click){
-		BasicCommands.addPlayer1Notification(out,"Spell 3",2);
-		gameState.AIPlayer.summonCard(out,gameState,card,gameState.AIPlayer,1);
+	//Staff of Y’Kir
+	//Mana Cost 2
+	//Abilities • Add +2 attack to your avatar
+	public void spellOf03(ActorRef out, GameState gameState){
+		gameState.AIPlayer.avatar.attack += 2;
+		BasicCommands.setUnitAttack(out, gameState.AIPlayer.avatar, gameState.AIPlayer.avatar.attack);
+		BasicCommands.addPlayer1Notification(out,"Staff of Y’Kir",2);
 	}
 
-	public void spellOf04(ActorRef out, GameState gameState, Card card, Tile tile_Click){
-		BasicCommands.addPlayer1Notification(out,"Spell 4",2);
-		gameState.AIPlayer.summonCard(out,gameState,card,gameState.AIPlayer,1);
+	//Entropic Decay
+	//Mana Cost 5
+	//Abilities • Reduce a non-avatar unit to 0 health
+	public void spellOf04(ActorRef out, GameState gameState, Card card, Unit targetUnit){
+		if(gameState.humanPlayer.avatar != targetUnit && gameState.AIPlayer.avatar != targetUnit){
+			targetUnit.health = 0;
+			targetUnit.determineUnitStatus(out, gameState);
+			BasicCommands.addPlayer1Notification(out,"Entropic Decay",2);
+		}
+		//gameState.AIPlayer.summonCard(out,gameState,card,gameState.AIPlayer,1);
 	}
 
 	

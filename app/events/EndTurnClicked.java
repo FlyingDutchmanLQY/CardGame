@@ -7,6 +7,9 @@ import structures.GameState;
 import structures.basic.AIPlayer;
 import structures.basic.Card;
 import structures.basic.Tile;
+import structures.basic.Unit;
+import structures.services.DoEnemyTurn;
+import utils.BasicObjectBuilders;
 
 import java.util.Random;
 
@@ -26,8 +29,14 @@ public class EndTurnClicked implements EventProcessor{
 	@Override
 	public void processEvent(ActorRef out, GameState gameState, JsonNode message) {
 
+		for(int i=0;i<9;i++){
+			for(int j=0;j<5;j++){
+				BasicCommands.drawTile(out, gameState.board[i][j], 0);
+			}
+		}
+
 		DoEnemyTurn doEnemyTurn = new DoEnemyTurn();
-		doEnemyTurn.doAITurn(out,gameState);
+		doEnemyTurn.doAITurn(out, gameState);
 
 //		aiPlayer.deleteCardInView(out);
 
@@ -40,6 +49,9 @@ public class EndTurnClicked implements EventProcessor{
 		}
 
 		else{
+			for (Unit u : gameState.unitList ) {
+				u.resetRemainingAtkMovTimes();
+			}
 			gameState.resetEventSignals();
 			gameState.isCardClicked = false;
 			//gameState.isMoveOrAttackUnit = false;

@@ -14,17 +14,17 @@ import java.util.HashMap;
  */
 public class GameState {
 
+   public boolean gameOver = false;
+
    public int turn = 1;
 
    public Tile[][] board = new Tile[9][5];
 
-   public ArrayList<Card> cards = new ArrayList<>();
+   //public ArrayList<Card> cards = new ArrayList<>();
 
    public ArrayList<Unit> unitList = new ArrayList<Unit>();
 
-   public int id_Unit = 0;
-
-   public HashMap<Tile,Unit> map_Unit = new HashMap<>();
+   public HashMap<Tile,Unit> unitPositionMap = new HashMap<>();
 
    public HumanPlayer humanPlayer = new HumanPlayer(20,0);
    public AIPlayer AIPlayer = new AIPlayer(20,0) ;

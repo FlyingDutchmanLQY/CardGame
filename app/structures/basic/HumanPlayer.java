@@ -7,16 +7,16 @@ import java.util.HashMap;
 
 public class HumanPlayer extends Player{
 /*  id      name
-*   0     c_truestrike
-*   1     c_sundrop_elixir
-*   2     c_comodo_charger
-*   3     c_hailstone_golem
-*   4     c_pureblade_enforcer
-*   5     c_azure_herald
-*   6     c_silverguard_knight
-*   7     c_azurite_lion
-*   8     c_fire_spitter
-*   9     c_ironcliff_guardian
+*   1     c_truestrike
+*   2     c_sundrop_elixir
+*   3     c_comodo_charger
+*   4     c_hailstone_golem
+*   5     c_pureblade_enforcer
+*   6    c_azure_herald
+*   7     c_silverguard_knight
+*   8    c_azurite_lion
+*   9     c_fire_spitter
+*   10     c_ironcliff_guardian
 * */
 
     public HashMap<Card,Unit> human_cardToUnit = new HashMap<>();
@@ -32,7 +32,7 @@ public class HumanPlayer extends Player{
     public void initDeck(){
         Card cardTemp;
         Unit unit;
-        int id = 0;
+        int id = 1;
 
         cardTemp = BasicObjectBuilders.loadCard(StaticConfFiles.c_truestrike, id++, Card.class);
         this.deck.add(cardTemp);

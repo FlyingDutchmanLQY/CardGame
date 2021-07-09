@@ -12,17 +12,18 @@ import structures.services.DoUnitClick;
 
 public class UnitClicked {
     public void processEvent(ActorRef out, GameState gameState, JsonNode message){
+        System.out.println("Event:UnitClicked");
         int tilex = message.get("tilex").asInt();
         int tiley = message.get("tiley").asInt();
         Tile targetTile = gameState.board[tilex][tiley];
-        Unit targetUnit = gameState.map_Unit.get(targetTile);
+        Unit targetUnit = gameState.unitPositionMap.get(targetTile);
         gameState.isUnitClicked = true;
         gameState.eventRecorder.add("UnitClicked");
 
         if(gameState.isSpellCard){
             DoSpellCast doSpellCast = new DoSpellCast();
             Card card = gameState.humanPlayer.cardsInPlayerHand.get(gameState.tempHandPosition - 1);
-            doSpellCast.castSpell(out, gameState, card, targetUnit);
+            doSpellCast.castSpell(out, gameState, card, targetUnit, gameState.humanPlayer);
         }
 
         //This is single triggered action
