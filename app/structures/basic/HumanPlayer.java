@@ -2,7 +2,6 @@ package structures.basic;
 
 import utils.BasicObjectBuilders;
 import utils.StaticConfFiles;
-
 import java.util.HashMap;
 
 public class HumanPlayer extends Player{
